@@ -243,3 +243,45 @@ h1, h2, h3, h4, h5, h6,
 html {
   scroll-behavior: smooth;
 }
+
+/* ─── Editor dark-text overrides ──────────────────── */
+/* Target specific hardcoded dark text colors from the original
+   kitten.css (#212326, #000) that become invisible on dark bg.
+   Only affects elements with dark text — does NOT blanket-body. */
+
+/* Asset/sprite/variable names in the editor sidebar */
+[class*="name_container"] [class*="name_input"],
+[class*="name_container"] [class*="name"]:not([class*="name_input"]),
+[class*="info_container"] [class*="name"],
+[class*="sprite"] [class*="name"] {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Dialog header text */
+[class*="dialog"] [class*="header"],
+[class*="dialog"] [class*="title"],
+[class*="modal"] [class*="header"],
+[class*="modal"] [class*="title"] {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Header toolbar text — file name, menu labels */
+[class*="header_left"] span,
+[class*="header_left"] div,
+[class*="header_center"] span,
+[class*="header_center"] div,
+[class*="header_right"] span,
+[class*="header_right"] div {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Help menu button in header */
+#header-help-btn,
+#header-setting-btn {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Footer area text */
+[class*="footer"] {
+  color: rgba(255, 255, 255, 0.7);
+}
