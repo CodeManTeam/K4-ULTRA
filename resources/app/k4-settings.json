@@ -1,0 +1,39 @@
+{
+  "general": {
+    "autoSave": true,
+    "hardwareAccel": true,
+    "showFps": false,
+    "smoothZoom": true,
+    "theme": "ultra"
+  },
+  "appearance": {
+    "primaryColor": "#583cdc",
+    "secondaryColor": "#00b4ff",
+    "bgColor": "#050508",
+    "bgImage": "",
+    "glassMorphism": false,
+    "glassBlur": 12,
+    "glassOpacity": 0.15,
+    "accentGlow": true,
+    "textColor": "#ffffff"
+  },
+  "editor": {
+    "snapToGrid": true,
+    "showCategoryIcons": true,
+    "compactMode": false,
+    "fontSize": 14,
+    "lineNumbers": true,
+    "autoComplete": true
+  },
+  "extensions": {
+    "allowUnsigned": false,
+    "devMode": true,
+    "sandbox": true,
+    "maxMemory": 256
+  },
+  "debug": {
+    "verboseLogging": false,
+    "showBlockIds": false,
+    "perfMonitor": false
+  }
+}

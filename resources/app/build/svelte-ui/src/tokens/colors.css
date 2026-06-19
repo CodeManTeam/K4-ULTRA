@@ -1,0 +1,78 @@
+/* ============================================================
+   OneConfig Color Tokens — Ported from Southside/Colors.java
+   ============================================================ */
+
+:root {
+  /* ─── Neutral Grays ─────────────────────────────────── */
+  --oc-gray-900:    #0d0e0f;
+  --oc-gray-900-80: rgba(13, 14, 15, 0.8);
+  --oc-gray-850:    #151719;
+  --oc-gray-800:    #151617;
+  --oc-gray-800-95: rgba(21, 22, 23, 0.95);
+  --oc-gray-700:    #222326;
+  --oc-gray-600:    #2a2c30;
+  --oc-gray-500:    #313338;
+  --oc-gray-500-80: rgba(49, 51, 56, 0.8);
+  --oc-gray-400:    #373b45;
+  --oc-gray-400-80: rgba(55, 59, 69, 0.8);
+  --oc-gray-400-60: rgba(55, 59, 69, 0.6);
+  --oc-gray-400-40: rgba(55, 59, 69, 0.4);
+  --oc-gray-300:    #494f5c;
+
+  /* ─── Primary / Blue ────────────────────────────────── */
+  --oc-primary-800: #0d3380;
+  --oc-primary-700: #1247b2;
+  --oc-primary-700-80: rgba(18, 71, 178, 0.8);
+  --oc-primary-600: #1452cc;
+  --oc-primary-500: #1967ff;
+  --oc-primary-400: #3081f2;
+
+  /* ─── White Opacity Scale ───────────────────────────── */
+  --oc-white-50:  rgba(255, 255, 255, 0.5);
+  --oc-white-60:  rgba(255, 255, 255, 0.6);
+  --oc-white-80:  rgba(255, 255, 255, 0.8);
+  --oc-white-90:  rgba(255, 255, 255, 0.9);
+  --oc-white-95:  rgba(255, 255, 255, 0.95);
+  --oc-white:     #ffffff;
+
+  /* ─── Semantic Colors ───────────────────────────────── */
+  --oc-success-600: #039855;
+  --oc-success-700: #027948;
+  --oc-warning-500: #f79009;
+  --oc-warning-600: #dc6803;
+  --oc-error-800:   #911818;
+  --oc-error-800-80: rgba(145, 24, 24, 0.8);
+  --oc-error-700:   #b41818;
+  --oc-error-600:   #d92020;
+  --oc-error-600-80: rgba(217, 32, 32, 0.8);
+  --oc-error-300:   #fd9b9b;
+  --oc-error-300-80: rgba(253, 155, 155, 0.8);
+
+  /* ─── Interactive Color Palettes ────────────────────── */
+  --oc-palette-primary-normal:       #1452cc;
+  --oc-palette-primary-hover:        #1247b2;
+  --oc-palette-primary-pressed:      rgba(18, 71, 178, 0.8);
+
+  --oc-palette-secondary-normal:     #313338;
+  --oc-palette-secondary-hover:      #373b45;
+  --oc-palette-secondary-pressed:    rgba(55, 59, 69, 0.8);
+
+  --oc-palette-tertiary-normal:      rgba(255, 255, 255, 0.8);
+  --oc-palette-tertiary-hover:       #ffffff;
+  --oc-palette-tertiary-pressed:     rgba(255, 255, 255, 0.8);
+
+  /* ─── SouthsideDark Theme Extension ─────────────────── */
+  --sd-bg:                #1f1f1f;
+  --sd-topbar:            #181818;
+  --sd-module-bg:         #242424;
+  --sd-module-disabled:   #313131;
+  --sd-boolean-enabled:   #698cff;
+  --sd-slider-drag:       #793bf7;
+  --sd-slider-release:    #3b67f7;
+  --sd-slider-enabled:    #64b4ff;
+  --sd-slider-value-drag: #8969ff;
+  --sd-mode-bg:           #313131;
+  --sd-mode-text:         #cccccc;
+  --sd-title-name:        #cccccc;
+  --sd-title-version:     #cccccc;
+}

@@ -1,218 +1,109 @@
-<!doctype html><html><head><meta charset="utf-8"><title>源码编辑器4.0</title><style>#kitten-loader-wrap {
-      position: absolute;
-      visibility: visible;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: 99;
-      background: radial-gradient(ellipse at center, #0a0a2e 0%, #02020a 100%);
-      text-align: center;
-      display: -webkit-box;
-      -webkit-box-align: center;
-      -webkit-box-pack: center;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-      -webkit-transition: all 0.4s ease-in;
-      transition: all 0.4s ease-in-out;
-      overflow: hidden;
-      font-family: PingFangSC-Semibold, "Microsoft YaHei", sans-serif;
+<!doctype html><html><head><meta charset="utf-8"><title>源码编辑器4.0</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+    #kitten-loader-wrap {
+      position: absolute; visibility: visible; width: 100%; height: 100%; top: 0; left: 0; z-index: 99;
+      background: #050508; text-align: center; display: flex; justify-content: center;
+      flex-direction: column; align-items: center; transition: all 0.4s ease-in-out;
+      overflow: hidden; font-family: 'Outfit', 'Noto Sans SC', 'PingFang SC', sans-serif;
     }
+    #root { height: 100%; width: 100%; }
 
-    /* 动态网格背景 */
     .kitten-loader-background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image:
-        linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 50px 50px;
-      animation: gridMove 20s linear infinite;
-      z-index: 0;
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+      background: radial-gradient(ellipse 80% 60% at 20% 80%, rgba(88,60,220,0.12) 0%, transparent 60%),
+                  radial-gradient(ellipse 60% 50% at 80% 20%, rgba(0,180,255,0.08) 0%, transparent 50%);
     }
-
-    @keyframes gridMove {
-      0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
-      100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+    .kitten-loader-grid {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 60%, black 20%, transparent 70%);
+      mask-image: radial-gradient(ellipse 70% 50% at 50% 60%, black 20%, transparent 70%);
+      animation: gridPulse 8s ease-in-out infinite;
     }
+    @keyframes gridPulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
 
-    /* 扫描线 */
     .kitten-loader-scanline {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to bottom, transparent 50%, rgba(0, 255, 255, 0.02) 50%);
-      background-size: 100% 4px;
-      pointer-events: none;
-      z-index: 1;
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
+      pointer-events: none; background: linear-gradient(to bottom, transparent 50%, rgba(0,180,255,0.015) 50%);
+      background-size: 100% 3px;
     }
-
-    /* 中央光晕 */
     .kitten-loader-glow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 600px;
-      height: 600px;
+      position: absolute; top: 50%; left: 50%; width: 800px; height: 800px; z-index: 0;
       transform: translate(-50%, -50%);
-      background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
-      animation: pulseGlow 3s ease-in-out infinite;
-      z-index: 0;
+      background: radial-gradient(circle at 40% 50%, rgba(88,60,220,0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 60% 50%, rgba(0,180,255,0.06) 0%, transparent 50%);
+      animation: glowOrbit 6s ease-in-out infinite alternate;
     }
+    @keyframes glowOrbit { 0%{transform:translate(-50%,-50%) scale(1)} 100%{transform:translate(-50%,-50%) scale(1.15)} }
 
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
-      50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
-    }
+    .kitten-loader-container { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
-    .kitten-loader-container {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* ULTRA 主标题 */
     .kitten-loader-logo {
-      font-size: 72px;
-      font-weight: 900;
-      letter-spacing: 12px;
-      color: #fff;
-      text-transform: uppercase;
-      position: relative;
-      text-shadow:
-        0 0 10px rgba(0, 212, 255, 0.8),
-        0 0 40px rgba(0, 132, 255, 0.6),
-        0 0 80px rgba(0, 68, 255, 0.4);
-      animation: flicker 2s infinite alternate;
-      margin-bottom: 16px;
+      font-size: 80px; font-weight: 900; letter-spacing: 14px; color: #fff; text-transform: uppercase;
+      text-shadow: 0 0 20px rgba(88,60,220,0.6), 0 0 60px rgba(88,60,220,0.3), 0 0 120px rgba(88,60,220,0.15);
+      animation: logoReveal 1.2s ease-out forwards; margin-bottom: 12px; opacity: 0; transform: translateY(20px);
     }
-
+    @keyframes logoReveal { 0%{opacity:0;transform:translateY(20px);letter-spacing:30px;filter:blur(4px)} 100%{opacity:1;transform:translateY(0);letter-spacing:14px;filter:blur(0)} }
     .kitten-loader-logo span {
-      color: #00d4ff;
+      background: linear-gradient(135deg, #583cdc, #00b4ff);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-
-    @keyframes flicker {
-      0%, 18%, 22%, 25%, 53%, 57%, 100% {
-        text-shadow:
-          0 0 10px rgba(0, 212, 255, 0.8),
-          0 0 40px rgba(0, 132, 255, 0.6),
-          0 0 80px rgba(0, 68, 255, 0.4);
-      }
-      20%, 24%, 55% {
-        text-shadow: none;
-      }
-    }
-
     .kitten-loader-subtitle {
-      font-size: 14px;
-      color: #00d4ff;
-      letter-spacing: 8px;
-      text-transform: uppercase;
-      margin-bottom: 48px;
-      opacity: 0.8;
-      animation: blink 1.5s ease-in-out infinite;
+      font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.5); letter-spacing: 6px;
+      text-transform: uppercase; margin-bottom: 56px; animation: subtitleReveal 0.8s ease-out 0.4s forwards;
+      opacity: 0;
     }
+    @keyframes subtitleReveal { 0%{opacity:0;transform:translateY(10px)} 100%{opacity:0.8;transform:translateY(0)} }
 
-    @keyframes blink {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 1; }
-    }
-
-    /* 进度条 */
     .progress-bar-area {
-      width: 360px;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 3px;
-      overflow: hidden;
-      position: relative;
-      box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+      width: 320px; height: 1px; background: rgba(255,255,255,0.06);
+      position: relative; overflow: hidden;
     }
-
     .progress-bar-area::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 40%;
-      background: linear-gradient(90deg, #00d4ff, #0084ff, #00d4ff);
+      content: ''; position: absolute; top: 0; left: 0; height: 100%; width: 40%;
+      background: linear-gradient(90deg, #583cdc, #00b4ff, #583cdc);
       background-size: 200% 100%;
-      border-radius: 3px;
-      animation: progressFlow 1.5s ease-in-out infinite, shimmer 2s linear infinite;
-      box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+      animation: pBar 2.5s ease-in-out infinite, pBarShimmer 2s linear infinite;
+      box-shadow: 0 0 15px rgba(88,60,220,0.4);
     }
-
-    @keyframes progressFlow {
-      0% { left: -40%; }
-      100% { left: 100%; }
-    }
-
-    @keyframes shimmer {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
+    @keyframes pBar { 0%{left:-40%} 50%{left:65%} 100%{left:-40%} }
+    @keyframes pBarShimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
 
     .kitten-loader-container .text {
-      margin-top: 20px;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.7);
-      letter-spacing: 2px;
-      line-height: 20px;
-      text-align: center;
-    }
-
-    #root {
-      height: 100%;
-      width: 100%;
+      margin-top: 24px; font-size: 12px; font-weight: 300;
+      color: rgba(255,255,255,0.35); letter-spacing: 3px;
     }
 
     #offline-text {
-      box-sizing: border-box;
-      width: 100px;
-      height: 36px;
-      padding: 8px 14px 10px;
-      text-align: center;
-      margin: 0 auto;
-      margin-top: 24px;
-      border: 1px solid rgba(0, 212, 255, 0.5);
-      border-radius: 6px;
-      font-size: 14px;
-      color: #00d4ff;
-      background: rgba(0, 212, 255, 0.05);
-      transition: all 0.2s;
+      box-sizing: border-box; margin: 20px auto 0; padding: 8px 20px;
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 4px;
+      font-size: 11px; font-weight: 300; letter-spacing: 2px;
+      color: rgba(255,255,255,0.3); background: transparent;
+      transition: all 0.3s ease; cursor: pointer; display: inline-block;
     }
     #offline-text:hover {
-      color: #fff;
-      background: rgba(0, 212, 255, 0.2);
-      border-color: #00d4ff;
-      cursor: pointer;
-      box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+      color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.15);
     }
 
-    /* 角落装饰 */
-    .kitten-loader-corner {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      border: 2px solid rgba(0, 212, 255, 0.3);
-      z-index: 2;
-    }
-    .kitten-loader-corner.tl { top: 30px; left: 30px; border-right: none; border-bottom: none; }
-    .kitten-loader-corner.tr { top: 30px; right: 30px; border-left: none; border-bottom: none; }
-    .kitten-loader-corner.bl { bottom: 30px; left: 30px; border-right: none; border-top: none; }
-    .kitten-loader-corner.br { bottom: 30px; right: 30px; border-left: none; border-top: none; }
-    </style><meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no"><meta name="apple-mobile-app-capable" content="yes"><meta name="full-screen" content="true"><meta name="screen-orientation" content="portrait"><meta name="x5-fullscreen" content="true"><meta name="360-fullscreen" content="true"><meta name="keywords" content="源码编辑器,Kitten源码编辑器,编程猫源码编辑器"><meta name="description" content="kitten源码编辑器，是编程猫公司开发的，适合中国儿童的图形化编程工具，简单易懂地创造属于你的游戏、故事、动画、应用程序..."><script>window.kitten_is_ide = true; // This has to happen before kitten.min.js is loaded</script><link rel="shortcut icon" href="./favicon_k4.png"><link href="./libs/perfect-scrollbar.min.css" rel="stylesheet"><link href="./kitten__a79a3015e6e4b2becc5f.css" rel="stylesheet"></head><body><svg id="kitten_svg" width="0" height="0" style="display: block;"><defs></defs></svg><div id="root"></div><div id="kitten-loader-wrap"><div class="kitten-loader-background"></div><div class="kitten-loader-scanline"></div><div class="kitten-loader-glow"></div><div class="kitten-loader-corner tl"></div><div class="kitten-loader-corner tr"></div><div class="kitten-loader-corner bl"></div><div class="kitten-loader-corner br"></div><div class="kitten-loader-container"><div class="kitten-loader-logo">K4 <span>ULTRA</span></div><div class="kitten-loader-subtitle">System Initializing</div><div class="progress-bar-area"></div><div class="text" id="text"><div id="loading-text"></div><div id="offline-text" onclick="switch_mode()"></div></div></div></div><script>var text = document.getElementById('loading-text');
+    .kitten-loader-corner { position: absolute; z-index: 2; pointer-events: none; }
+    .kitten-loader-corner::before, .kitten-loader-corner::after { content: ''; position: absolute; background: rgba(255,255,255,0.08); }
+    .kitten-loader-corner.tl { top: 30px; left: 30px; }
+    .kitten-loader-corner.tl::before { top: 0; left: 0; width: 40px; height: 1px; }
+    .kitten-loader-corner.tl::after { top: 0; left: 0; width: 1px; height: 40px; }
+    .kitten-loader-corner.tr { top: 30px; right: 30px; }
+    .kitten-loader-corner.tr::before { top: 0; right: 0; width: 40px; height: 1px; }
+    .kitten-loader-corner.tr::after { top: 0; right: 0; width: 1px; height: 40px; }
+    .kitten-loader-corner.bl { bottom: 30px; left: 30px; }
+    .kitten-loader-corner.bl::before { bottom: 0; left: 0; width: 40px; height: 1px; }
+    .kitten-loader-corner.bl::after { bottom: 0; left: 0; width: 1px; height: 40px; }
+    .kitten-loader-corner.br { bottom: 30px; right: 30px; }
+    .kitten-loader-corner.br::before { bottom: 0; right: 0; width: 40px; height: 1px; }
+    .kitten-loader-corner.br::after { bottom: 0; right: 0; width: 1px; height: 40px; }
+    </style><meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no"><meta name="apple-mobile-app-capable" content="yes"><meta name="full-screen" content="true"><meta name="screen-orientation" content="portrait"><meta name="x5-fullscreen" content="true"><meta name="360-fullscreen" content="true"><meta name="keywords" content="源码编辑器,Kitten源码编辑器,编程猫源码编辑器"><meta name="description" content="kitten源码编辑器，是编程猫公司开发的，适合中国儿童的图形化编程工具，简单易懂地创造属于你的游戏、故事、动画、应用程序..."><script>window.kitten_is_ide = true; // This has to happen before kitten.min.js is loaded</script><link rel="shortcut icon" href="./favicon_k4.png"><link href="./libs/perfect-scrollbar.min.css" rel="stylesheet"><link href="./kitten__a79a3015e6e4b2becc5f.css" rel="stylesheet"><link href="./design-system.css" rel="stylesheet"><link href="./svelte/app.svelte.css" rel="stylesheet"></head><body>
+<svg id="kitten_svg" width="0" height="0" style="display: block;"><defs></defs></svg><div id="root"></div><div id="kitten-loader-wrap"><div class="kitten-loader-background"></div><div class="kitten-loader-grid"></div><div class="kitten-loader-scanline"></div><div class="kitten-loader-glow"></div><div class="kitten-loader-corner tl"></div><div class="kitten-loader-corner tr"></div><div class="kitten-loader-corner bl"></div><div class="kitten-loader-corner br"></div><div class="kitten-loader-container"><div class="kitten-loader-logo">K4 <span>ULTRA</span></div><div class="kitten-loader-subtitle">System Initializing</div><div class="progress-bar-area"></div><div class="text" id="text"><div id="loading-text"></div><div id="offline-text" onclick="switch_mode()"></div></div></div></div><script>var text = document.getElementById('loading-text');
     var offline_text = document.getElementById('offline-text');
     var lang = navigator.language;
     lang = lang.substr(0,2);
@@ -231,62 +122,8 @@
         var baseText = text.innerHTML;
         setInterval(function(){
           dots = (dots + 1) % 4;
-          text.innerHTML = baseText + '<span style="color:#00d4ff;">' + Array(dots + 1).join('.') + '</span>';
+          text.innerHTML = baseText + '<span style="color:#583cdc;">' + Array(dots + 1).join('.') + '</span>';
         }, 500);
-      })();
-
-      // 加载自定义主题
-      (function loadLoadingTheme(){
-        try {
-          var fs = require('fs');
-          var path = require('path');
-          var baseDir = path.join(__dirname, '..');
-          var cfgPath = path.join(baseDir, 'loading-config.json');
-          if (!fs.existsSync(cfgPath)) return;
-          var cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
-          var theme = cfg.activeTheme || 'ultra';
-          var themePath = path.join(baseDir, 'loading-themes', theme, 'index.html');
-          if (!fs.existsSync(themePath)) return;
-          var html = fs.readFileSync(themePath, 'utf8');
-          var wrap = document.getElementById('kitten-loader-wrap');
-          if (!wrap) return;
-          // 解析主题 HTML
-          var parser = new DOMParser();
-          var doc = parser.parseFromString(html, 'text/html');
-          // 提取并注入样式
-          var styles = doc.querySelectorAll('style');
-          for (var i = 0; i < styles.length; i++) {
-            var s = document.createElement('style');
-            s.textContent = styles[i].textContent;
-            document.head.appendChild(s);
-          }
-          // 设置内容
-          var bodyHtml = '';
-          var children = doc.body.childNodes;
-          for (var j = 0; j < children.length; j++) {
-            var n = children[j];
-            if (n.nodeType === 1) bodyHtml += n.outerHTML;
-            else if (n.nodeType === 3) bodyHtml += n.textContent;
-          }
-          wrap.innerHTML = bodyHtml;
-          // 执行主题脚本
-          var scripts = doc.querySelectorAll('script');
-          for (var k = 0; k < scripts.length; k++) {
-            var code = scripts[k].textContent;
-            if (code) {
-              var sc = document.createElement('script');
-              sc.textContent = code;
-              document.body.appendChild(sc);
-            }
-          }
-          // 重新绑定必要元素
-          text = document.getElementById('loading-text');
-          offline_text = document.getElementById('offline-text');
-          if (text && offline_text) {
-            text.innerHTML = lang == "zh" ? "正在初始化 K4 ULTRA 系统..." : "Initializing K4 ULTRA system...";
-            offline_text.innerHTML = lang == "zh" ? "离线打开" : "Offline Open";
-          }
-        } catch(e) { console.error('[ThemeLoader] error:', e.message); }
       })();
       </script>
 <script src="./libs/lottie_svg_cmao.min.js"></script>
@@ -295,5 +132,22 @@
 <script src="./kitten.822d814413fb10654fde.js?v=14"></script>
 <script src="./extension-loader-v2.js?v=14"></script>
 <script src="./extension-manager.js?v=14"></script>
+<script>
+// K4 Ultra — inject custom appearance from k4-settings.json
+(function(){try{var fs=require('fs');var path=require('path');var base=path.join(__dirname,'..');var sp=path.join(base,'k4-settings.json');if(!fs.existsSync(sp))return;var c=JSON.parse(fs.readFileSync(sp,'utf8'));var a=c.appearance;if(!a)return;var css=':root{';if(a.primaryColor)css+='--k4-primary:'+a.primaryColor+';';if(a.secondaryColor)css+='--k4-secondary:'+a.secondaryColor+';';if(a.bgColor)css+='--k4-bg:'+a.bgColor+';';if(a.textColor)css+='--k4-text:'+a.textColor+';';if(a.glassMorphism){css+='--k4-glass-blur:'+(a.glassBlur||12)+'px;';css+='--k4-glass-opacity:'+(a.glassOpacity||15)+';'}css+='}';if(a.bgImage){css+='#kitten-loader-wrap::before{content:\"\";position:absolute;inset:0;z-index:-1;background:url(\"'+a.bgImage+'\") center/cover no-repeat;';if(a.glassMorphism)css+='filter:blur('+(a.glassBlur||12)+'px);opacity:0.3;';css+='}';}if(a.accentGlow&&a.primaryColor){css+='.kitten-loader-logo{text-shadow:0 0 20px '+a.primaryColor+'99,0 0 60px '+a.primaryColor+'4d,0 0 120px '+a.primaryColor+'26!important;}';}var s=document.createElement('style');s.id='k4-custom-appearance';s.textContent=css;document.head.appendChild(s);}catch(e){}})();
+
+// K4 Ultra: fallback hard timeout — hide loader if editor fails after 30s
+setTimeout(function() {
+  var loader = document.getElementById('kitten-loader-wrap');
+  if (loader && window.getComputedStyle(loader).visibility === 'visible') {
+    loader.style.visibility = 'hidden';
+    console.warn('[K4] Loader hidden by emergency fallback (30s timeout)');
+  }
+}, 30000);
+</script>
+
+<!-- ⚡ 加载 Svelte UI Shell (FAB / 设置 / 调试面板等) -->
+<script src="./svelte/app.svelte.js"></script>
+
 </body>
 </html>

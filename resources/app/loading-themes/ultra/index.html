@@ -1,55 +1,285 @@
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&family=Noto+Sans+SC:wght@300;400;600;900&display=swap');
+
 #kitten-loader-wrap {
   position: absolute; visibility: visible; width: 100%; height: 100%; top: 0; left: 0; z-index: 99;
-  background: radial-gradient(ellipse at center, #0a0a2e 0%, #02020a 100%);
+  background: #050508;
   text-align: center; display: flex; justify-content: center; flex-direction: column; align-items: center;
   transition: all 0.4s ease-in-out; overflow: hidden;
-  font-family: PingFangSC-Semibold, "Microsoft YaHei", sans-serif;
+  font-family: 'Outfit', 'Noto Sans SC', 'PingFang SC', sans-serif;
 }
+
+/* 动态星云背景 */
 .kitten-loader-background {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  background-image: linear-gradient(rgba(0,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,255,0.03) 1px, transparent 1px);
-  background-size: 50px 50px; animation: gridMove 20s linear infinite; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 80%, rgba(88, 60, 220, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(0, 180, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(20, 20, 60, 0.3) 0%, transparent 70%);
+  z-index: 0;
 }
-@keyframes gridMove {
-  0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
-  100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+
+/* 粒子网格 - 更精致的透视效果 */
+.kitten-loader-grid {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 70% 50% at 50% 60%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 60%, black 20%, transparent 70%);
+  animation: gridPulse 8s ease-in-out infinite;
+  z-index: 0;
 }
-.kitten-loader-scanline { position:absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(to bottom, transparent 50%, rgba(0,255,255,0.02) 50%); background-size: 100% 4px; pointer-events:none; z-index:1; }
-.kitten-loader-glow { position:absolute; top:50%; left:50%; width:600px; height:600px; transform: translate(-50%, -50%); background: radial-gradient(circle, rgba(0,212,255,0.15) 0%, transparent 70%); animation: pulseGlow 3s ease-in-out infinite; z-index:0; }
-@keyframes pulseGlow { 0%,100%{opacity:0.4;transform:translate(-50%,-50%) scale(1)} 50%{opacity:0.8;transform:translate(-50%,-50%) scale(1.1)} }
-.kitten-loader-container { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; justify-content:center; }
-.kitten-loader-logo { font-size:72px; font-weight:900; letter-spacing:12px; color:#fff; text-transform:uppercase; text-shadow: 0 0 10px rgba(0,212,255,0.8), 0 0 40px rgba(0,132,255,0.6), 0 0 80px rgba(0,68,255,0.4); animation: flicker 2s infinite alternate; margin-bottom:16px; }
-.kitten-loader-logo span { color:#00d4ff; }
-@keyframes flicker { 0%,18%,22%,25%,53%,57%,100%{text-shadow: 0 0 10px rgba(0,212,255,0.8), 0 0 40px rgba(0,132,255,0.6), 0 0 80px rgba(0,68,255,0.4)} 20%,24%,55%{text-shadow:none} }
-.kitten-loader-subtitle { font-size:14px; color:#00d4ff; letter-spacing:8px; text-transform:uppercase; margin-bottom:48px; opacity:0.8; animation: blink 1.5s ease-in-out infinite; }
-@keyframes blink { 0%,100%{opacity:0.4} 50%{opacity:1} }
-.progress-bar-area { width:360px; height:6px; background:rgba(255,255,255,0.08); border-radius:3px; overflow:hidden; position:relative; box-shadow: 0 0 10px rgba(0,212,255,0.2); }
-.progress-bar-area::after { content:''; position:absolute; top:0; left:0; height:100%; width:40%; background: linear-gradient(90deg, #00d4ff, #0084ff, #00d4ff); background-size: 200% 100%; border-radius:3px; animation: progressFlow 1.5s ease-in-out infinite, shimmer 2s linear infinite; box-shadow: 0 0 20px rgba(0,212,255,0.6); }
-@keyframes progressFlow { 0%{left:-40%} 100%{left:100%} }
-@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
-#kitten-loader-wrap .text { margin-top:20px; font-size:14px; color:rgba(255,255,255,0.7); letter-spacing:2px; line-height:20px; text-align:center; }
-#offline-text { box-sizing:border-box; width:100px; height:36px; padding:8px 14px 10px; text-align:center; margin:0 auto; margin-top:24px; border:1px solid rgba(0,212,255,0.5); border-radius:6px; font-size:14px; color:#00d4ff; background:rgba(0,212,255,0.05); transition: all 0.2s; }
-#offline-text:hover { color:#fff; background:rgba(0,212,255,0.2); border-color:#00d4ff; cursor:pointer; box-shadow: 0 0 15px rgba(0,212,255,0.4); }
-.kitten-loader-corner { position:absolute; width:40px; height:40px; border:2px solid rgba(0,212,255,0.3); z-index:2; }
-.kitten-loader-corner.tl { top:30px; left:30px; border-right:none; border-bottom:none; }
-.kitten-loader-corner.tr { top:30px; right:30px; border-left:none; border-bottom:none; }
-.kitten-loader-corner.bl { bottom:30px; left:30px; border-right:none; border-top:none; }
-.kitten-loader-corner.br { bottom:30px; right:30px; border-left:none; border-top:none; }
+
+@keyframes gridPulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+/* 扫描线 - 更精细 */
+.kitten-loader-scanline {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 180, 255, 0.015) 50%);
+  background-size: 100% 3px;
+  pointer-events: none; z-index: 1;
+}
+
+/* 中央光晕 - 多层 */
+.kitten-loader-glow {
+  position: absolute; top: 50%; left: 50%;
+  width: 800px; height: 800px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 40% 50%, rgba(88, 60, 220, 0.08) 0%, transparent 50%),
+              radial-gradient(circle at 60% 50%, rgba(0, 180, 255, 0.06) 0%, transparent 50%);
+  animation: glowOrbit 6s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+@keyframes glowOrbit {
+  0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) scale(1.15) rotate(5deg); }
+}
+
+/* 浮动粒子 */
+.kitten-loader-particles {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  overflow: hidden; z-index: 1; pointer-events: none;
+}
+.particle {
+  position: absolute; width: 3px; height: 3px;
+  background: rgba(88, 60, 220, 0.6);
+  border-radius: 50%;
+  animation: floatUp linear infinite;
+}
+.particle:nth-child(1) { left: 10%; width: 2px; height: 2px; animation-duration: 14s; animation-delay: 0s; background: rgba(0, 180, 255, 0.5); }
+.particle:nth-child(2) { left: 25%; width: 3px; height: 3px; animation-duration: 18s; animation-delay: 2s; }
+.particle:nth-child(3) { left: 40%; width: 1.5px; height: 1.5px; animation-duration: 12s; animation-delay: 1s; background: rgba(0, 180, 255, 0.4); }
+.particle:nth-child(4) { left: 55%; width: 2.5px; height: 2.5px; animation-duration: 20s; animation-delay: 3s; }
+.particle:nth-child(5) { left: 70%; width: 2px; height: 2px; animation-duration: 15s; animation-delay: 0.5s; background: rgba(88, 60, 220, 0.7); }
+.particle:nth-child(6) { left: 85%; width: 3px; height: 3px; animation-duration: 17s; animation-delay: 1.5s; }
+.particle:nth-child(7) { left: 50%; width: 1.5px; height: 1.5px; animation-duration: 13s; animation-delay: 4s; background: rgba(0, 180, 255, 0.5); }
+.particle:nth-child(8) { left: 15%; width: 2px; height: 2px; animation-duration: 16s; animation-delay: 2.5s; }
+
+@keyframes floatUp {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 0.3; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+.kitten-loader-container { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+/* LOGO - 更精致的版式 */
+.kitten-loader-logo {
+  font-size: 80px; font-weight: 900;
+  letter-spacing: 14px;
+  color: #fff;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 20px rgba(88, 60, 220, 0.6),
+    0 0 60px rgba(88, 60, 220, 0.3),
+    0 0 120px rgba(88, 60, 220, 0.15);
+  animation: logoReveal 1.2s ease-out forwards;
+  margin-bottom: 12px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes logoReveal {
+  0% { opacity: 0; transform: translateY(20px); letter-spacing: 30px; filter: blur(4px); }
+  100% { opacity: 1; transform: translateY(0); letter-spacing: 14px; filter: blur(0); }
+}
+
+.kitten-loader-logo .accent {
+  background: linear-gradient(135deg, #583cdc, #00b4ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.kitten-loader-logo .flicker {
+  animation: logoFlicker 3s ease-in-out infinite 1.5s;
+}
+
+@keyframes logoFlicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  94% { opacity: 0.3; }
+  96% { opacity: 1; }
+  98% { opacity: 0.5; }
+  99% { opacity: 1; }
+}
+
+/* 副标题 */
+.kitten-loader-subtitle {
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 56px;
+  animation: subtitleReveal 0.8s ease-out 0.4s forwards;
+  opacity: 0;
+}
+
+@keyframes subtitleReveal {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 0.8; transform: translateY(0); }
+}
+
+/* 进度条 - 更精致 */
+.progress-track {
+  width: 320px; height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  position: relative; overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, #583cdc, #00b4ff, #583cdc);
+  background-size: 200% 100%;
+  border-radius: 1px;
+  animation: barGlow 2s linear infinite, barProgress 2.5s ease-in-out infinite;
+  box-shadow: 0 0 15px rgba(88, 60, 220, 0.4), 0 0 30px rgba(0, 180, 255, 0.2);
+}
+
+@keyframes barGlow {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes barProgress {
+  0% { width: 5%; }
+  50% { width: 65%; }
+  100% { width: 10%; }
+}
+
+/* 进度点 */
+.progress-dot {
+  width: 8px; height: 8px;
+  background: #00b4ff;
+  border-radius: 50%;
+  position: absolute; top: 50%; left: 0;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 20px rgba(0, 180, 255, 0.6);
+  animation: dotMove 2.5s ease-in-out infinite;
+}
+
+@keyframes dotMove {
+  0% { left: 5%; }
+  50% { left: 65%; }
+  100% { left: 10%; }
+}
+
+/* 加载文字 */
+#kitten-loader-wrap .text {
+  margin-top: 24px;
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 3px;
+}
+
+#offline-text {
+  box-sizing: border-box;
+  margin-top: 20px;
+  padding: 8px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.3);
+  background: transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+#offline-text:hover {
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 20px rgba(88, 60, 220, 0.08);
+}
+
+/* 角标 - 更精致 */
+.kitten-loader-corner {
+  position: absolute; z-index: 2;
+  pointer-events: none;
+}
+.kitten-loader-corner::before,
+.kitten-loader-corner::after {
+  content: ''; position: absolute; background: rgba(255, 255, 255, 0.08);
+}
+.kitten-loader-corner.tl { top: 30px; left: 30px; }
+.kitten-loader-corner.tl::before { top: 0; left: 0; width: 40px; height: 1px; }
+.kitten-loader-corner.tl::after { top: 0; left: 0; width: 1px; height: 40px; }
+.kitten-loader-corner.tr { top: 30px; right: 30px; }
+.kitten-loader-corner.tr::before { top: 0; right: 0; width: 40px; height: 1px; }
+.kitten-loader-corner.tr::after { top: 0; right: 0; width: 1px; height: 40px; }
+.kitten-loader-corner.bl { bottom: 30px; left: 30px; }
+.kitten-loader-corner.bl::before { bottom: 0; left: 0; width: 40px; height: 1px; }
+.kitten-loader-corner.bl::after { bottom: 0; left: 0; width: 1px; height: 40px; }
+.kitten-loader-corner.br { bottom: 30px; right: 30px; }
+.kitten-loader-corner.br::before { bottom: 0; right: 0; width: 40px; height: 1px; }
+.kitten-loader-corner.br::after { bottom: 0; right: 0; width: 1px; height: 40px; }
+
+/* 底部版本信息 */
+.kitten-loader-version {
+  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+  font-size: 10px; font-weight: 300;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.1);
+  z-index: 2;
+}
 </style>
+
 <div class="kitten-loader-background"></div>
+<div class="kitten-loader-grid"></div>
 <div class="kitten-loader-scanline"></div>
 <div class="kitten-loader-glow"></div>
+<div class="kitten-loader-particles">
+  <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+  <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+  <div class="particle"></div><div class="particle"></div>
+</div>
 <div class="kitten-loader-corner tl"></div>
 <div class="kitten-loader-corner tr"></div>
 <div class="kitten-loader-corner bl"></div>
 <div class="kitten-loader-corner br"></div>
+
 <div class="kitten-loader-container">
-  <div class="kitten-loader-logo">K4 <span>ULTRA</span></div>
+  <div class="kitten-loader-logo">K4 <span class="accent flicker">ULTRA</span></div>
   <div class="kitten-loader-subtitle">System Initializing</div>
-  <div class="progress-bar-area"></div>
+  <div class="progress-track">
+    <div class="progress-bar"></div>
+    <div class="progress-dot"></div>
+  </div>
   <div class="text" id="text">
     <div id="loading-text"></div>
     <div id="offline-text" onclick="switch_mode()"></div>
   </div>
 </div>
+
+<div class="kitten-loader-version">v2.0 // BLINK CORE</div>

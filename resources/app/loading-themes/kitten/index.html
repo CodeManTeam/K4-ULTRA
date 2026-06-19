@@ -1,33 +1,236 @@
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
+
 #kitten-loader-wrap {
   position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 99;
-  background: linear-gradient(135deg, #ffe8d6 0%, #ffd6a5 100%);
+  background: linear-gradient(160deg, #fef3e7 0%, #fde8d0 40%, #fcd5b0 100%);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  font-family: "Microsoft YaHei", sans-serif;
+  font-family: 'Nunito', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  overflow: hidden;
 }
-.kitten-cat { width: 120px; height: 120px; background: #ff8c42; border-radius: 50% 50% 45% 45%; position: relative; animation: kittenBounce 2s ease-in-out infinite; }
-.kitten-cat::before, .kitten-cat::after { content:''; position: absolute; top: -20px; width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-bottom: 40px solid #ff8c42; }
-.kitten-cat::before { left: 15px; transform: rotate(-15deg); }
-.kitten-cat::after { right: 15px; transform: rotate(15deg); }
-.kitten-face { position: absolute; top: 40px; left: 50%; transform: translateX(-50%); }
-.kitten-eye { width: 14px; height: 14px; background: #333; border-radius: 50%; display: inline-block; margin: 0 14px; animation: kittenBlink 4s infinite; }
-.kitten-nose { width: 12px; height: 8px; background: #ff6b6b; border-radius: 50%; margin: 8px auto 0; }
-@keyframes kittenBounce { 0%,100%{transform: translateY(0)} 50%{transform: translateY(-12px)} }
-@keyframes kittenBlink { 0%,90%,100%{transform: scaleY(1)} 95%{transform: scaleY(0.1)} }
-.kitten-title { font-size: 32px; font-weight: 700; color: #ff8c42; margin-top: 32px; }
-.kitten-subtitle { font-size: 14px; color: #c97b4f; margin-top: 8px; }
-.kitten-paws { margin-top: 24px; font-size: 24px; letter-spacing: 4px; color: #ff8c42; animation: kittenPaws 1s infinite; }
-@keyframes kittenPaws { 0%,100%{opacity:0.4} 50%{opacity:1} }
-#offline-text { margin-top: 24px; padding: 8px 16px; background: #ff8c42; color: #fff; border-radius: 20px; cursor: pointer; }
-#offline-text:hover { background: #ff6b1a; }
+
+/* 柔软光晕背景 */
+.kitten-bg-glow {
+  position: absolute; top: 50%; left: 50%;
+  width: 600px; height: 600px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255, 140, 66, 0.12) 0%, transparent 60%);
+  animation: bgPulse 4s ease-in-out infinite;
+}
+
+@keyframes bgPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+}
+
+/* 小猫头部 - 更精致的 CSS 艺术 */
+.kitten-head {
+  position: relative; z-index: 2;
+  width: 140px; height: 120px;
+  margin-bottom: 8px;
+}
+
+/* 耳朵 */
+.kitten-ears { position: relative; }
+.kitten-ear {
+  position: absolute; top: 0;
+  width: 0; height: 0;
+  border-left: 22px solid transparent;
+  border-right: 22px solid transparent;
+  border-bottom: 50px solid #ff8c42;
+  filter: drop-shadow(0 4px 8px rgba(255, 140, 66, 0.2));
+}
+.kitten-ear.left { left: 18px; transform: rotate(-10deg); }
+.kitten-ear.right { right: 18px; transform: rotate(10deg); }
+
+/* 脸 */
+.kitten-face {
+  position: absolute; top: 28px; left: 50%; transform: translateX(-50%);
+  width: 110px; height: 85px;
+  background: #ff8c42;
+  border-radius: 50% 50% 45% 45%;
+  box-shadow: inset 0 -15px 30px rgba(0,0,0,0.05);
+  animation: faceBounce 3s ease-in-out infinite;
+}
+
+@keyframes faceBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-8px); }
+}
+
+/* 眼睛 */
+.kitten-eyes { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); display: flex; gap: 30px; }
+.kitten-eye {
+  width: 16px; height: 16px;
+  background: #2d1b14;
+  border-radius: 50%;
+  animation: kittenBlink 3s infinite;
+}
+
+@keyframes kittenBlink {
+  0%, 44%, 48%, 100% { transform: scaleY(1); }
+  46% { transform: scaleY(0.1); }
+}
+
+/* 眼睛高光 */
+.kitten-eye::after {
+  content: '';
+  position: absolute;
+  width: 6px; height: 6px;
+  background: white;
+  border-radius: 50%;
+  top: 2px; right: 2px;
+}
+
+/* 鼻子 */
+.kitten-nose {
+  position: absolute; top: 40px; left: 50%; transform: translateX(-50%);
+  width: 12px; height: 10px;
+  background: #ff6b6b;
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+/* 胡须 */
+.kitten-whiskers {
+  position: absolute; top: 48px; left: 50%; transform: translateX(-50%);
+  width: 140px;
+}
+.kitten-whisker {
+  position: absolute; height: 1px; background: rgba(45, 27, 20, 0.15);
+}
+.kitten-whisker:nth-child(1) { left: -100px; top: 0; width: 70px; transform: rotate(-5deg); }
+.kitten-whisker:nth-child(2) { left: -100px; top: 10px; width: 70px; transform: rotate(5deg); }
+.kitten-whisker:nth-child(3) { left: -100px; top: 20px; width: 60px; transform: rotate(15deg); }
+.kitten-whisker:nth-child(4) { right: -100px; top: 0; width: 70px; transform: rotate(5deg); }
+.kitten-whisker:nth-child(5) { right: -100px; top: 10px; width: 70px; transform: rotate(-5deg); }
+.kitten-whisker:nth-child(6) { right: -100px; top: 20px; width: 60px; transform: rotate(-15deg); }
+
+/* 嘴巴 */
+.kitten-mouth {
+  position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 4px;
+}
+.kitten-mouth span {
+  width: 8px; height: 6px;
+  border: 2px solid rgba(45, 27, 20, 0.2);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+}
+
+/* 肉球爪印 */
+.kitten-paws {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 30px;
+}
+.kitten-paw {
+  width: 24px; height: 20px;
+  background: #ff8c42;
+  border-radius: 50% 50% 40% 40%;
+  box-shadow: inset 0 -3px 6px rgba(0,0,0,0.06);
+}
+.kitten-paw::after {
+  content: '';
+  position: absolute;
+  width: 6px; height: 6px;
+  background: rgba(255, 107, 107, 0.3);
+  border-radius: 50%;
+  bottom: 4px; left: 50%; transform: translateX(-50%);
+}
+
+.kitten-title {
+  font-size: 32px;
+  font-weight: 900;
+  color: #e07a3a;
+  margin-top: 12px;
+  letter-spacing: 1px;
+  position: relative; z-index: 2;
+}
+
+.kitten-title span {
+  color: #c96a2e;
+}
+
+.kitten-subtitle {
+  font-size: 13px;
+  color: rgba(193, 123, 79, 0.7);
+  margin-top: 6px;
+  font-weight: 400;
+  position: relative; z-index: 2;
+}
+
+/* 加载点动画 */
+.kitten-dots {
+  margin-top: 28px;
+  display: flex; gap: 8px;
+  position: relative; z-index: 2;
+}
+.kitten-dot {
+  width: 8px; height: 8px;
+  background: #ff8c42;
+  border-radius: 50%;
+  opacity: 0.2;
+  animation: dotPulse 1.4s ease-in-out infinite;
+}
+.kitten-dot:nth-child(2) { animation-delay: 0.2s; }
+.kitten-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.3); }
+}
+
+#offline-text {
+  margin-top: 28px;
+  padding: 8px 24px;
+  background: #ff8c42;
+  color: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(255, 140, 66, 0.2);
+  transition: all 0.3s ease;
+  position: relative; z-index: 2;
+}
+#offline-text:hover {
+  background: #ff6b1a;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(255, 140, 66, 0.3);
+}
+#offline-text:active {
+  transform: translateY(0);
+}
 </style>
-<div class="kitten-cat">
+
+<div class="kitten-bg-glow"></div>
+
+<div class="kitten-head">
+  <div class="kitten-ears">
+    <div class="kitten-ear left"></div>
+    <div class="kitten-ear right"></div>
+  </div>
   <div class="kitten-face">
-    <span class="kitten-eye"></span><span class="kitten-eye"></span>
+    <div class="kitten-eyes">
+      <div class="kitten-eye"></div>
+      <div class="kitten-eye"></div>
+    </div>
     <div class="kitten-nose"></div>
+    <div class="kitten-mouth"><span></span><span></span></div>
+  </div>
+  <div class="kitten-whiskers">
+    <div class="kitten-whisker"></div><div class="kitten-whisker"></div><div class="kitten-whisker"></div>
+    <div class="kitten-whisker"></div><div class="kitten-whisker"></div><div class="kitten-whisker"></div>
   </div>
 </div>
-<div class="kitten-title">K4 ULTRA</div>
+
+<div class="kitten-title">K4 <span>ULTRA</span></div>
 <div class="kitten-subtitle">小猫正在准备创作空间...</div>
-<div class="kitten-paws">🐾 🐾 🐾</div>
+
+<div class="kitten-dots">
+  <div class="kitten-dot"></div>
+  <div class="kitten-dot"></div>
+  <div class="kitten-dot"></div>
+</div>
+
 <div id="offline-text" onclick="switch_mode()">离线打开</div>

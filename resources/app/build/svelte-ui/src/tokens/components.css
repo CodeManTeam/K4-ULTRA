@@ -1,0 +1,138 @@
+/* ============================================================
+   OneConfig Component Tokens — Dimensions & Spacing
+   ============================================================ */
+
+:root {
+  /* ─── Layout ────────────────────────────────────────── */
+  --oc-window-width:          1280px;
+  --oc-window-height:         800px;
+  --oc-window-radius:         20px;
+  --oc-sidebar-width:         244px;
+  --oc-content-width:         1056px;
+  --oc-topbar-height:         72px;
+  --oc-content-area-x:        224px;
+  --oc-content-area-y:        72px;
+  --oc-content-area-width:    1056px;
+  --oc-content-area-height:   728px;
+
+  /* ─── Sidebar ───────────────────────────────────────── */
+  --oc-sidebar-button-width:  192px;
+  --oc-sidebar-button-height: 36px;
+  --oc-sidebar-button-radius: 12px;
+  --oc-sidebar-button-x:      16px;
+  --oc-sidebar-label-size:    12px;
+
+  /* ─── Button ────────────────────────────────────────── */
+  --oc-button-height-sm:      32px;
+  --oc-button-height-md:      36px;
+  --oc-button-height-lg:      40px;
+  --oc-button-height-xl:      48px;
+  --oc-button-radius:         10px;
+  --oc-button-radius-xl:      14px;
+  --oc-button-font-sm:        12px;
+  --oc-button-font-md:        14px;
+  --oc-button-font-lg:        16px;
+  --oc-button-font-xl:        20px;
+  --oc-button-icon-sm:        16px;
+  --oc-button-icon-md:        18px;
+  --oc-button-icon-lg:        20px;
+  --oc-button-icon-xl:        24px;
+  --oc-button-padding-x-sm:   12px;
+  --oc-button-padding-x-md:   16px;
+  --oc-button-padding-x-lg:   16px;
+  --oc-button-padding-x-xl:   20px;
+  --oc-button-disabled-opacity: 0.5;
+
+  /* ─── Checkbox ──────────────────────────────────────── */
+  --oc-checkbox-size:         24px;
+  --oc-checkbox-radius:       6px;
+  --oc-checkbox-border-color: var(--oc-gray-300);
+  --oc-checkbox-fill:         var(--oc-primary-500);
+  --oc-checkbox-row-height:   32px;
+
+  /* ─── Switch / Toggle ──────────────────────────────── */
+  --oc-switch-width:          42px;
+  --oc-switch-height:         24px;
+  --oc-switch-radius:         12px;
+  --oc-switch-thumb-size:     18px;
+  --oc-switch-thumb-radius:   9px;
+  --oc-switch-thumb-color:    #ffffff;
+  --oc-switch-thumb-travel:   18px;
+  --oc-switch-row-height:     32px;
+
+  /* ─── Slider ────────────────────────────────────────── */
+  --oc-slider-track-width:    512px;
+  --oc-slider-track-height:   4px;
+  --oc-slider-track-radius:   4px;
+  --oc-slider-track-color:    var(--oc-gray-300);
+  --oc-slider-fill-color:     var(--oc-primary-500);
+  --oc-slider-thumb-size:     24px;
+  --oc-slider-thumb-radius:   12px;
+  --oc-slider-thumb-color:    #ffffff;
+  --oc-slider-row-height:     32px;
+  --oc-slider-input-width:    84px;
+
+  /* ─── Text Input ────────────────────────────────────── */
+  --oc-input-height:          32px;
+  --oc-input-radius:          12px;
+  --oc-input-bg:              var(--oc-gray-850);
+  --oc-input-border:          var(--oc-gray-700);
+  --oc-input-border-focus:    var(--oc-primary-600);
+  --oc-input-border-error:    var(--oc-error-600);
+  --oc-input-text:            var(--oc-white);
+  --oc-input-placeholder:     var(--oc-white-60);
+  --oc-input-font-size:       12px;
+  --oc-input-padding-x:       12px;
+  --oc-input-width-sm:        256px;
+  --oc-input-width-lg:        640px;
+
+  /* ─── Dropdown ──────────────────────────────────────── */
+  --oc-dropdown-height:       32px;
+  --oc-dropdown-radius:       12px;
+  --oc-dropdown-menu-radius:  12px;
+  --oc-dropdown-menu-bg:      var(--oc-gray-700);
+  --oc-dropdown-option-height: 32px;
+  --oc-dropdown-option-radius: 8px;
+  --oc-dropdown-option-hover: var(--oc-primary-700);
+  --oc-dropdown-max-visible:  10;
+
+  /* ─── Modal / Dialog ────────────────────────────────── */
+  --oc-modal-radius:          20px;
+  --oc-modal-bg:              var(--oc-gray-800);
+  --oc-modal-overlay:         rgba(0, 0, 0, 0.6);
+  --oc-modal-padding:         24px;
+
+  /* ─── Tooltip ───────────────────────────────────────── */
+  --oc-tooltip-radius:        4px;
+  --oc-tooltip-bg:            var(--oc-gray-700);
+  --oc-tooltip-text:          var(--oc-white);
+  --oc-tooltip-font-size:     12px;
+
+  /* ─── Card / ModCard ────────────────────────────────── */
+  --oc-card-radius:           12px;
+  --oc-card-width:            244px;
+  --oc-card-height:           119px;
+  --oc-card-top-height:       87px;
+  --oc-card-bottom-height:    32px;
+
+  /* ─── Scrollbar ─────────────────────────────────────── */
+  --oc-scrollbar-width:       4px;
+  --oc-scrollbar-radius:      4px;
+  --oc-scrollbar-color:       var(--oc-gray-400-80);
+  --oc-scrollbar-hover:       var(--oc-gray-400);
+
+  /* ─── Spacing Scale ─────────────────────────────────── */
+  --oc-space-1:   1px;
+  --oc-space-2:   2px;
+  --oc-space-4:   4px;
+  --oc-space-8:   8px;
+  --oc-space-12:  12px;
+  --oc-space-16:  16px;
+  --oc-space-20:  20px;
+  --oc-space-24:  24px;
+  --oc-space-32:  32px;
+  --oc-space-40:  40px;
+  --oc-space-48:  48px;
+  --oc-space-64:  64px;
+  --oc-space-80:  80px;
+}

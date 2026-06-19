@@ -1,0 +1,58 @@
+/* ============================================================
+   OneConfig Typography Tokens — Inter Font Family
+   ============================================================ */
+
+/* Google Fonts loaded via <link> in index.html */
+
+:root {
+  /* ─── Font Families ─────────────────────────────────── */
+  --oc-font-inter:         'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --oc-font-mono:          'JetBrains Mono', 'Cascadia Code', 'Fira Code', monospace;
+
+  /* ─── Font Weights ──────────────────────────────────── */
+  --oc-weight-regular:     400;
+  --oc-weight-medium:      500;
+  --oc-weight-semibold:    600;
+  --oc-weight-bold:        700;
+  --oc-weight-black:       900;
+
+  /* ─── Font Sizes ────────────────────────────────────── */
+  --oc-text-xs:            10px;
+  --oc-text-sm:            12px;
+  --oc-text-base:          14px;
+  --oc-text-md:            16px;
+  --oc-text-lg:            20px;
+  --oc-text-xl:            24px;
+  --oc-text-2xl:           32px;
+  --oc-text-3xl:           48px;
+  --oc-text-4xl:           64px;
+
+  /* ─── Line Heights ──────────────────────────────────── */
+  --oc-leading-tight:      1.2;
+  --oc-leading-normal:     1.4;
+  --oc-leading-relaxed:    1.6;
+
+  /* ─── Letter Spacing ────────────────────────────────── */
+  --oc-tracking-tight:     -0.02em;
+  --oc-tracking-normal:    0;
+  --oc-tracking-wide:      0.05em;
+  --oc-tracking-wider:     0.1em;
+
+  /* ─── Text Presets ──────────────────────────────────── */
+  --oc-text-display:       500 var(--oc-text-3xl) / var(--oc-leading-tight) var(--oc-font-inter);
+  --oc-text-hero:          700 var(--oc-text-2xl) / var(--oc-leading-tight) var(--oc-font-inter);
+  --oc-text-title:         600 var(--oc-text-xl) / var(--oc-leading-tight) var(--oc-font-inter);
+  --oc-text-heading:       600 var(--oc-text-md) / var(--oc-leading-normal) var(--oc-font-inter);
+  --oc-text-body:          400 var(--oc-text-base) / var(--oc-leading-relaxed) var(--oc-font-inter);
+  --oc-text-label:         600 var(--oc-text-sm) / var(--oc-leading-tight) var(--oc-font-inter);
+  --oc-text-caption:       400 var(--oc-text-xs) / var(--oc-leading-normal) var(--oc-font-inter);
+  --oc-text-mono:          400 var(--oc-text-sm) / var(--oc-leading-normal) var(--oc-font-mono);
+}
+
+/* ─── Base Typography (applied via .k4-scope) ────────── */
+.k4-scope, .k4-scope * {
+  font-family: var(--oc-font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}

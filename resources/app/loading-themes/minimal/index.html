@@ -1,17 +1,125 @@
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
 #kitten-loader-wrap {
   position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 99;
-  background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f8f8f6;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
-.minimal-logo { font-size: 48px; font-weight: 700; color: #333; letter-spacing: 4px; }
-.minimal-subtitle { font-size: 14px; color: #888; margin-top: 12px; }
-.minimal-spinner { width: 40px; height: 40px; border: 3px solid #eee; border-top-color: #333; border-radius: 50%; animation: minimalSpin 1s linear infinite; margin-top: 32px; }
-@keyframes minimalSpin { to { transform: rotate(360deg); } }
-#offline-text { margin-top: 32px; padding: 8px 16px; border: 1px solid #ddd; color: #555; border-radius: 4px; cursor: pointer; }
-#offline-text:hover { background: #f5f5f5; }
+
+/* 微妙噪点纹理 */
+.minimal-noise {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.minimal-container {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center;
+}
+
+/* Logo 文字 - 干净的无衬线 */
+.minimal-logo {
+  font-size: 40px;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -1px;
+  opacity: 0;
+  animation: minimalFadeIn 1s ease-out forwards;
+}
+
+.minimal-logo span {
+  font-weight: 300;
+  color: #999;
+}
+
+@keyframes minimalFadeIn {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* 分割线 */
+.minimal-divider {
+  width: 24px; height: 1px;
+  background: #d4d4d4;
+  margin: 20px 0;
+  opacity: 0;
+  animation: minimalFadeIn 0.6s ease-out 0.3s forwards;
+}
+
+.minimal-subtitle {
+  font-size: 12px;
+  font-weight: 400;
+  color: #aaa;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: minimalFadeIn 0.6s ease-out 0.5s forwards;
+}
+
+/* 纤细的加载指示器 */
+.minimal-indicator {
+  display: flex;
+  gap: 6px;
+  margin-top: 40px;
+  opacity: 0;
+  animation: minimalFadeIn 0.6s ease-out 0.7s forwards;
+}
+
+.minimal-bar {
+  width: 3px;
+  height: 16px;
+  background: #d4d4d4;
+  border-radius: 2px;
+  animation: barWave 1.2s ease-in-out infinite;
+}
+.minimal-bar:nth-child(2) { animation-delay: 0.1s; height: 24px; }
+.minimal-bar:nth-child(3) { animation-delay: 0.2s; height: 32px; }
+.minimal-bar:nth-child(4) { animation-delay: 0.3s; height: 24px; }
+.minimal-bar:nth-child(5) { animation-delay: 0.4s; height: 16px; }
+
+@keyframes barWave {
+  0%, 100% { background: #d4d4d4; transform: scaleY(1); }
+  50% { background: #888; transform: scaleY(0.6); }
+}
+
+#offline-text {
+  margin-top: 48px;
+  padding: 7px 20px;
+  border: 1px solid #e0e0e0;
+  color: #bbb;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: minimalFadeIn 0.6s ease-out 1s forwards;
+  background: transparent;
+}
+#offline-text:hover {
+  border-color: #aaa;
+  color: #666;
+  background: #f0f0ee;
+}
 </style>
-<div class="minimal-logo">K4 ULTRA</div>
-<div class="minimal-subtitle">Loading, please wait...</div>
-<div class="minimal-spinner"></div>
-<div id="offline-text" onclick="switch_mode()">离线打开</div>
+
+<div class="minimal-noise"></div>
+<div class="minimal-container">
+  <div class="minimal-logo">K4 <span>ULTRA</span></div>
+  <div class="minimal-divider"></div>
+  <div class="minimal-subtitle">Loading, please wait...</div>
+  <div class="minimal-indicator">
+    <div class="minimal-bar"></div>
+    <div class="minimal-bar"></div>
+    <div class="minimal-bar"></div>
+    <div class="minimal-bar"></div>
+    <div class="minimal-bar"></div>
+  </div>
+  <div id="offline-text" onclick="switch_mode()">离线打开</div>
+</div>

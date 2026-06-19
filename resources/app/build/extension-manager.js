@@ -84,7 +84,8 @@
   var body = null;
 
   function createPanel() {
-    if (document.getElementById('k4-ultra-settings')) return;
+    // Skip if Svelte settings panel is already providing this functionality
+    if (document.querySelector('.k4-settings-panel')) return;
 
     panel = document.createElement('div');
     panel.id = 'k4-ultra-settings';
@@ -409,7 +410,8 @@
   }
 
   function createToolbarButton() {
-    if (document.getElementById('k4-ultra-settings-btn')) return;
+    // Skip if Svelte FAB menu is already providing this functionality
+    return; // Integrated into Svelte Settings panel (FAB -> Settings)
 
     var btn = document.createElement('div');
     btn.id = 'k4-ultra-settings-btn';

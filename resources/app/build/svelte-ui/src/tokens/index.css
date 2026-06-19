@@ -1,0 +1,45 @@
+/* ============================================================
+   OneConfig Design Tokens — Aggregate
+   ============================================================ */
+
+@import './colors.css';
+@import './typography.css';
+@import './animations.css';
+@import './components.css';
+
+/* ─── Scoped Reset (only for Svelte UI, NOT React) ──────── */
+.k4-scope, .k4-scope * {
+  box-sizing: border-box;
+}
+
+/* ─── Selection ──────────────────────────────────────── */
+::selection {
+  background: var(--oc-primary-600);
+  color: var(--oc-white);
+}
+
+/* ─── Focus Ring ──────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--oc-primary-500);
+  outline-offset: 2px;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: var(--oc-scrollbar-width);
+  height: var(--oc-scrollbar-width);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--oc-scrollbar-color);
+  border-radius: var(--oc-scrollbar-radius);
+  transition: background var(--oc-duration-color) var(--oc-ease-in-out-quad);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--oc-scrollbar-hover);
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}

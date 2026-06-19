@@ -25,6 +25,7 @@
   var K4 = null;
   var extCategories = [];
   var extToolboxXMLs = {};
+  var extensionErrors = [];  // 收集扩展加载错误，用于用户反馈
   function waitForBridge(callback, maxRetries) {
     maxRetries = maxRetries || 100;
     var attempts = 0;
@@ -33,6 +34,11 @@
       var k4 = window.__k4;
       if (k4 && k4.blocks && k4.runtime && k4.toolbar) {
         K4 = k4;
+        // ⚡ 刷新任何排队中的 Extension API 调用（解决 bridge.ts 懒加载代理竞态）
+        if (window.__k4._flush) {
+          window.__k4._flush();
+          console.log('[K4 Loader] Bridge deferred queue flushed');
+        }
         callback();
       } else if (attempts < maxRetries) {
         setTimeout(check, 200);
@@ -199,7 +205,7 @@
               if (arr[bi] && arr[bi].type) types.push(arr[bi].type);
             }
             log(extName, arr.length + ' block(s) registered, types: ' + types.join(', '));
-          } catch(e) { error(extName, 'Blocks error: ' + e.message); }
+          } catch(e) { error(extName, 'Blocks error: ' + e.message); extensionErrors.push({ name: extName, stage: 'blocks', error: e.message }); }
         }
       }
 
@@ -235,7 +241,7 @@
             var gens = new Function('return ' + genCode)();
             K4.generator.registerBatch(gens);
             log(extName, 'Generators registered');
-          } catch(e) { error(extName, 'Generator error: ' + e.message); }
+          } catch(e) { error(extName, 'Generator error: ' + e.message); extensionErrors.push({ name: extName, stage: 'generator', error: e.message }); }
         }
       }
 
@@ -265,7 +271,7 @@
               K4.runtime.registerBatch(funcs);
             }
             log(extName, 'Runtime registered');
-          } catch(e) { error(extName, 'Runtime error: ' + e.message); }
+          } catch(e) { error(extName, 'Runtime error: ' + e.message); extensionErrors.push({ name: extName, stage: 'runtime', error: e.message }); }
         }
       }
 
@@ -279,7 +285,7 @@
 
       log(extName, 'OK Loaded');
 
-    } catch(e) { error(name, 'Failed: ' + e.message); }
+    } catch(e) { error(name, 'Failed: ' + e.message); extensionErrors.push({ name: name, stage: 'load', error: e.message }); }
   }
 
   // ─── 扫描扩展目录 ───
@@ -396,6 +402,23 @@
       }
 
     } catch(e) { error('Scanner', 'Error: ' + e.message); }
+
+    // ─── 通知 Svelte UI 显示加载错误 ───
+    if (extensionErrors.length > 0) {
+      window.__k4._extensionErrors = extensionErrors;
+      try {
+        if (window.__k4bus && typeof window.__k4bus.emit === 'function') {
+          for (var ei = 0; ei < extensionErrors.length; ei++) {
+            var err = extensionErrors[ei];
+            window.__k4bus.emit('notification', {
+              type: 'error',
+              message: '扩展 [' + err.name + '] 加载失败: ' + err.stage + ' - ' + err.error,
+              duration: 8000
+            });
+          }
+        }
+      } catch(e) { /* 通知非致命 */ }
+    }
   }
 
   log('Init', 'K4 Blink Extension Loader v2');

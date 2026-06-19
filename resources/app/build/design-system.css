@@ -1,0 +1,328 @@
+/* ============================================================
+   K4 Ultra Design System — Style Overlay
+   Improves typography, surfaces, interactivity, and consistency
+   without breaking any existing functionality.
+   ============================================================ */
+
+/* ─── OneConfig Theme — K4 Ultra override ─────────────── */
+/* Maps the React editor's theme-color-* variables to OneConfig palette.
+   Add data-theme="theme/ultra" to <body> to activate. */
+body[data-theme="theme/ultra"],
+body[data-theme="theme/blue"] {
+  --theme-color-0: 20,82,204;    /* oc-primary-600 */
+  --theme-color-1: 37,100,214;
+  --theme-color-2: 54,118,224;
+  --theme-color-3: 80,140,235;
+  --theme-color-4: 115,165,240;
+  --theme-color-5: 155,190,245;
+  --theme-color-6: 180,207,250;
+  --theme-color-7: 205,220,252;
+  --theme-color-8: 225,235,254;
+  --theme-color-9: 240,245,255;
+  --theme-color-10: 255,255,255;
+  --theme-color-n1: 18,71,178;    /* oc-primary-700 */
+  --theme-color-n2: 13,51,128;    /* oc-primary-800 */
+  --theme-color-t: 255,255,255;    /* oc-white */
+  --theme-color-t1: 200,204,210;
+  --theme-color-t3: 155,160,170;
+  --theme-color-t5: 110,115,125;
+  --theme-color-t7: 73,78,92;     /* oc-gray-300 */
+  --theme-color-s1-0: 25,103,255; /* oc-primary-500 */
+  --theme-color-s1-1: 20,82,204;
+  --theme-color-s1-2: 18,71,178;
+  --theme-color-s2-0: 3,152,85;   /* oc-success-600 */
+  --theme-color-s2-1: 2,121,72;
+  --theme-color-s2-2: 2,100,60;
+  --theme-color-c: 255,153,72;    /* accent orange */
+  --theme-color-c1: 242,127,12;
+  --theme-color-c2: 230,115,0;
+}
+
+/* ─── Local Font Declaration ──────────────────────────── */
+@font-face {
+  font-family: 'Noto Sans SC VF';
+  src: url('./asset/font/NotoSansCJKsc-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─── Variable Refinements ─────────────────────────────── */
+:root {
+  --ds-radius-sm: 4px;
+  --ds-radius-md: 6px;
+  --ds-radius-lg: 10px;
+  --ds-shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+  --ds-shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+  --ds-shadow-lg: 0 8px 30px rgba(0,0,0,0.08);
+  --ds-transition: 200ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* ─── Typography ───────────────────────────────────────── */
+body, .editor-wrapper, .blocklySvg, .blocklyWidgetDiv, .goog-menu,
+div[class*="modal"], div[class*="dialog"], div[class*="panel"],
+input, textarea, select, button {
+  font-family: 'Outfit', 'Noto Sans SC VF', 'Noto Sans SC', 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Better heading hierarchy */
+h1, h2, h3, h4, h5, h6,
+[class*="title"], [class*="heading"], [class*="header"] {
+  text-wrap: balance;
+}
+
+/* Tabular numbers for data */
+[class*="number"], [class*="count"], [class*="stat"],
+[class*="mono"], code, pre {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Surface & Depth ──────────────────────────────────── */
+
+/* Add subtle grain overlay */
+#root::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  opacity: 0.012;
+  pointer-events: none;
+  z-index: 100000;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+
+/* Card refinements */
+.k4-scope [class*="card"], .k4-scope [class*="panel"], .k4-scope [class*="widget"] {
+  border-color: transparent;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  transition: box-shadow var(--ds-transition);
+}
+.k4-scope [class*="card"]:hover, .k4-scope [class*="panel"]:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* ─── Interactive States ───────────────────────────────── */
+
+/* Buttons — unified hover/active */
+.k4-scope [class*="btn"], .k4-scope button, .k4-scope [role="button"] {
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s, transform 0.15s;
+  cursor: pointer;
+  user-select: none;
+}
+.k4-scope [class*="btn"]:active, .k4-scope button:active, .k4-scope [role="button"]:active {
+  transform: scale(0.97);
+}
+
+/* Button accent: title-style gradient on primary actions */
+.k4-scope [class*="btn"][class*="primary"], .k4-scope [class*="btn"][class*="positive"],
+.k4-scope button[class*="confirm"], .k4-scope [class*="btn"][class*="submit"] {
+  background: linear-gradient(135deg, rgb(var(--theme-color-0, 41, 126, 255)), rgb(var(--theme-color-n1, 27, 112, 242)));
+  box-shadow: 0 4px 14px rgba(var(--theme-color-0, 41, 126, 255), 0.3);
+  color: #fff;
+}
+.k4-scope [class*="btn"][class*="primary"]:hover, .k4-scope [class*="btn"][class*="positive"]:hover,
+.k4-scope button[class*="confirm"]:hover {
+  box-shadow: 0 6px 20px rgba(var(--theme-color-0, 41, 126, 255), 0.4);
+  transform: translateY(-1px);
+}
+
+/* Better focus ring */
+*:focus-visible {
+  outline: 2px solid rgb(var(--theme-color-0, 41, 126, 255)) !important;
+  outline-offset: 2px;
+}
+
+/* Disabled state uniformity */
+.k4-scope [class*="disabled"], .k4-scope [disabled], .k4-scope [aria-disabled="true"] {
+  opacity: 0.45 !important;
+  pointer-events: none !important;
+  filter: grayscale(0.4);
+}
+
+/* ─── Scrollbar — refined ────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(128, 128, 128, 0.15);
+  border-radius: 3px;
+  transition: background 200ms;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(128, 128, 128, 0.3);
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* ─── Input & Form Fields ─────────────────────────────── */
+.k4-scope input, .k4-scope textarea, .k4-scope select, .k4-scope [contenteditable] {
+  transition: border-color var(--ds-transition), box-shadow var(--ds-transition);
+  caret-color: rgb(var(--theme-color-0, 41, 126, 255));
+}
+.k4-scope input:focus, .k4-scope textarea:focus, .k4-scope select:focus, .k4-scope [contenteditable]:focus {
+  border-color: rgb(var(--theme-color-0, 41, 126, 255));
+  box-shadow: 0 0 0 3px rgba(var(--theme-color-0, 41, 126, 255), 0.1);
+  outline: none;
+}
+
+/* ─── Dialog / Modal ──────────────────────────────────── */
+.k4-scope [class*="modal"], .k4-scope [class*="dialog"],
+[class*="blocklyModal"], [class*="blocklyDialog"] {
+  border-radius: var(--ds-radius-lg);
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+  border: 1px solid rgba(128,128,128,0.06);
+}
+[class*="modal"] [class*="header"], [class*="dialog"] [class*="header"] {
+  border-bottom: 1px solid rgba(128, 128, 128, 0.06);
+}
+[class*="modal"] [class*="footer"], [class*="dialog"] [class*="footer"] {
+  border-top: 1px solid rgba(128, 128, 128, 0.06);
+}
+
+/* ─── Dropdown & Menu ─────────────────────────────────── */
+[class*="dropdown"], [class*="menu"], [class*="select"] {
+  border-radius: var(--ds-radius-md) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+  border: 1px solid rgba(128, 128, 128, 0.06) !important;
+  overflow: hidden;
+}
+
+/* ─── Tabs ────────────────────────────────────────────── */
+[class*="tab"] {
+  transition: all var(--ds-transition) !important;
+}
+[class*="tab"][class*="active"], [class*="tab"][class*="selected"],
+[class*="tab"][aria-selected="true"] {
+  position: relative;
+}
+
+/* ─── Tooltip ──────────────────────────────────────────── */
+[class*="tooltip"], [role="tooltip"] {
+  border-radius: 4px !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important;
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ─── Loading Spinner ──────────────────────────────────── */
+[class*="spinner"], [class*="loading"] {
+  border-width: 2px !important;
+  border-color: rgba(128,128,128,0.08) !important;
+  border-top-color: rgb(var(--theme-color-0, 41, 126, 255)) !important;
+}
+
+/* ─── AI Lab specific refinements ─────────────────────── */
+.ai_lab_dialog-wrapper_3Lku- { border-radius: 12px !important; overflow: hidden; }
+.ai_lab_dialog-header_2ZH9e { border-radius: 12px 12px 0 0 !important; }
+.ai_lab_outside-wrapper_1IEDF { border-radius: 10px !important; transition: all 0.25s ease !important; }
+.ai_lab_outside-wrapper_1IEDF:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.06); }
+.ai_lab_inside-wrapper_1TxAv { border-radius: 8px !important; }
+.ai_lab_data-set-wrapper_2SQ6L { border-radius: 8px !important; transition: all 0.25s ease !important; }
+.ai_lab_data-set-wrapper_2SQ6L:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.08) !important; }
+.ai_lab_btn-positive_2dlj3, .ai_lab_btn-positive_1pBWi, .ai_lab_btn-positive_3plrj,
+.ai_lab_btn-positive_33KRS {
+  background: linear-gradient(135deg, #FF9948, #FF831C) !important;
+  box-shadow: 0 4px 12px rgba(255, 153, 72, 0.25) !important;
+  border: none !important;
+}
+.ai_lab_btn-positive_2dlj3:hover, .ai_lab_btn-positive_1pBWi:hover, .ai_lab_btn-positive_3plrj:hover,
+.ai_lab_btn-positive_33KRS:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(255, 153, 72, 0.35) !important;
+}
+
+/* ─── Smooth scrolling (html only, not * to avoid perf impact) ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─── Dark theme text fix ──────────────────────────── */
+/* Override black/dark text from original kitten.css that becomes
+   invisible on K4 Ultra's dark background */
+
+/* General text that inherits black from normalize/original CSS */
+body, .editor-wrapper, .blocklySvg, .blocklyWidgetDiv,
+.goog-menu, .goog-menuitem, .blocklyToolboxDiv,
+div[class*="modal"], div[class*="dialog"], div[class*="panel"],
+div[class*="popover"], div[class*="tooltip"],
+.blocklyDropDownDiv, .blocklyContextMenu,
+.blocklyFieldLabel, .blocklyText,
+.blocklyBubbleCanvas, .blocklyResizeSW,
+.blocklyScrollbarHandle, .blocklyFlyoutLabelText {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Fix mark/highlight text */
+mark {
+  color: inherit;
+  background: rgba(88, 60, 220, 0.3);
+}
+
+/* Fix native select/option text on dark backgrounds */
+/* (Svelte .k4-select has its own styling via CSS vars) */
+option, .goog-menuitem, select:not(.k4-select) {
+  color: #ddd;
+  background: #1e1e1e;
+}
+
+/* Blockly dropdown & field text */
+.blocklyDropDownDiv .goog-menu,
+.blocklyDropDownDiv .goog-menuitem,
+.blocklyFieldLabel, .blocklyTextInput {
+  color: #ddd !important;
+  background: #222 !important;
+}
+
+/* Fix dropdown options in the editor */
+.blocklyWidgetDiv .goog-menu,
+.blocklyWidgetDiv .goog-menuitem,
+.blocklyWidgetDiv .blocklyDropDownDiv {
+  color: #e0e0e0 !important;
+  background: #1a1a1a !important;
+}
+.blocklyWidgetDiv .goog-menuitem:hover {
+  background: rgba(88, 60, 220, 0.3) !important;
+}
+
+/* Fix native select dropdown options */
+select:not(.k4-select) option {
+  color: #e0e0e0;
+  background: #1e1e1e;
+}
+
+/* Fix Blockly flyout label text */
+.blocklyFlyoutLabelText {
+  fill: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Fix any SVG text that might be black */
+.blocklyText, .blocklySvg text,
+.blocklyBubbleText, .blocklyLedgendText {
+  fill: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Fix extension-manager legacy panel to use dark theme */
+#k4-ultra-settings,
+#k4-ultra-settings-body {
+  background: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+#k4-ultra-settings-body div[style*="background:#fff"],
+#k4-ultra-settings-body div[style*="color:#333"],
+#k4-ultra-settings-body div[style*="color:#222"],
+#k4-ultra-settings-body div[style*="color:#888"] {
+  background: #222 !important;
+  color: #e0e0e0 !important;
+}
+#k4-ultra-plugin-list div[style*="background:#fff"] {
+  background: #2a2a2a !important;
+  color: #e0e0e0 !important;
+}
