@@ -1,15 +1,16 @@
 /* ============================================================
-   OneConfig Color Tokens — Ported from Southside/Colors.java
+   OneConfig Color Tokens 鈥?Ported from Southside/Colors.java
    ============================================================ */
 
 :root {
-  /* ─── Neutral Grays ─────────────────────────────────── */
+  /* 鈹€鈹€鈹€ Neutral Grays 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
   --oc-gray-900:    #0d0e0f;
   --oc-gray-900-80: rgba(13, 14, 15, 0.8);
   --oc-gray-850:    #151719;
   --oc-gray-800:    #151617;
   --oc-gray-800-95: rgba(21, 22, 23, 0.95);
   --oc-gray-700:    #222326;
+  --oc-gray-750:    #1c1e21;
   --oc-gray-600:    #2a2c30;
   --oc-gray-500:    #313338;
   --oc-gray-500-80: rgba(49, 51, 56, 0.8);
@@ -19,7 +20,7 @@
   --oc-gray-400-40: rgba(55, 59, 69, 0.4);
   --oc-gray-300:    #494f5c;
 
-  /* ─── Primary / Blue ────────────────────────────────── */
+  /* 鈹€鈹€鈹€ Primary / Blue 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
   --oc-primary-800: #0d3380;
   --oc-primary-700: #1247b2;
   --oc-primary-700-80: rgba(18, 71, 178, 0.8);
@@ -27,15 +28,16 @@
   --oc-primary-500: #1967ff;
   --oc-primary-400: #3081f2;
 
-  /* ─── White Opacity Scale ───────────────────────────── */
+  /* 鈹€鈹€鈹€ White Opacity Scale 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
   --oc-white-50:  rgba(255, 255, 255, 0.5);
   --oc-white-60:  rgba(255, 255, 255, 0.6);
+  --oc-white-70:  rgba(255, 255, 255, 0.7);
   --oc-white-80:  rgba(255, 255, 255, 0.8);
   --oc-white-90:  rgba(255, 255, 255, 0.9);
   --oc-white-95:  rgba(255, 255, 255, 0.95);
   --oc-white:     #ffffff;
 
-  /* ─── Semantic Colors ───────────────────────────────── */
+  /* 鈹€鈹€鈹€ Semantic Colors 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
   --oc-success-600: #039855;
   --oc-success-700: #027948;
   --oc-warning-500: #f79009;
@@ -48,7 +50,7 @@
   --oc-error-300:   #fd9b9b;
   --oc-error-300-80: rgba(253, 155, 155, 0.8);
 
-  /* ─── Interactive Color Palettes ────────────────────── */
+  /* 鈹€鈹€鈹€ Interactive Color Palettes 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
   --oc-palette-primary-normal:       #1452cc;
   --oc-palette-primary-hover:        #1247b2;
   --oc-palette-primary-pressed:      rgba(18, 71, 178, 0.8);
@@ -61,7 +63,7 @@
   --oc-palette-tertiary-hover:       #ffffff;
   --oc-palette-tertiary-pressed:     rgba(255, 255, 255, 0.8);
 
-  /* ─── SouthsideDark Theme Extension ─────────────────── */
+  /* 鈹€鈹€鈹€ SouthsideDark Theme Extension 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
   --sd-bg:                #1f1f1f;
   --sd-topbar:            #181818;
   --sd-module-bg:         #242424;

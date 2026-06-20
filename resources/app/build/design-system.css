@@ -1,10 +1,10 @@
 /* ============================================================
-   K4 Ultra Design System — Style Overlay
+   K4 Ultra Design System 鈥?Style Overlay
    Improves typography, surfaces, interactivity, and consistency
    without breaking any existing functionality.
    ============================================================ */
 
-/* ─── OneConfig Theme — K4 Ultra override ─────────────── */
+/* 鈹€鈹€鈹€ OneConfig Theme 鈥?K4 Ultra override 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 /* Maps the React editor's theme-color-* variables to OneConfig palette.
    Add data-theme="theme/ultra" to <body> to activate. */
 body[data-theme="theme/ultra"],
@@ -38,7 +38,7 @@ body[data-theme="theme/blue"] {
   --theme-color-c2: 230,115,0;
 }
 
-/* ─── Local Font Declaration ──────────────────────────── */
+/* 鈹€鈹€鈹€ Local Font Declaration 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 @font-face {
   font-family: 'Noto Sans SC VF';
   src: url('./asset/font/NotoSansCJKsc-Regular.woff2') format('woff2');
@@ -47,7 +47,7 @@ body[data-theme="theme/blue"] {
   font-display: swap;
 }
 
-/* ─── Variable Refinements ─────────────────────────────── */
+/* 鈹€鈹€鈹€ Variable Refinements 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 :root {
   --ds-radius-sm: 4px;
   --ds-radius-md: 6px;
@@ -58,7 +58,7 @@ body[data-theme="theme/blue"] {
   --ds-transition: 200ms cubic-bezier(0.33, 1, 0.68, 1);
 }
 
-/* ─── Typography ───────────────────────────────────────── */
+/* 鈹€鈹€鈹€ Typography 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 body, .editor-wrapper, .blocklySvg, .blocklyWidgetDiv, .goog-menu,
 div[class*="modal"], div[class*="dialog"], div[class*="panel"],
 input, textarea, select, button {
@@ -77,7 +77,7 @@ h1, h2, h3, h4, h5, h6,
   font-variant-numeric: tabular-nums;
 }
 
-/* ─── Surface & Depth ──────────────────────────────────── */
+/* 鈹€鈹€鈹€ Surface & Depth 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 
 /* Add subtle grain overlay */
 #root::before {
@@ -101,9 +101,9 @@ h1, h2, h3, h4, h5, h6,
   box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
 
-/* ─── Interactive States ───────────────────────────────── */
+/* 鈹€鈹€鈹€ Interactive States 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 
-/* Buttons — unified hover/active */
+/* Buttons 鈥?unified hover/active */
 .k4-scope [class*="btn"], .k4-scope button, .k4-scope [role="button"] {
   transition: background 0.15s, color 0.15s, box-shadow 0.15s, transform 0.15s;
   cursor: pointer;
@@ -139,7 +139,7 @@ h1, h2, h3, h4, h5, h6,
   filter: grayscale(0.4);
 }
 
-/* ─── Scrollbar — refined ────────────────────────────── */
+/* 鈹€鈹€鈹€ Scrollbar 鈥?refined 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -159,7 +159,7 @@ h1, h2, h3, h4, h5, h6,
   background: transparent;
 }
 
-/* ─── Input & Form Fields ─────────────────────────────── */
+/* 鈹€鈹€鈹€ Input & Form Fields 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 .k4-scope input, .k4-scope textarea, .k4-scope select, .k4-scope [contenteditable] {
   transition: border-color var(--ds-transition), box-shadow var(--ds-transition);
   caret-color: rgb(var(--theme-color-0, 41, 126, 255));
@@ -170,7 +170,7 @@ h1, h2, h3, h4, h5, h6,
   outline: none;
 }
 
-/* ─── Dialog / Modal ──────────────────────────────────── */
+/* 鈹€鈹€鈹€ Dialog / Modal 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 .k4-scope [class*="modal"], .k4-scope [class*="dialog"],
 [class*="blocklyModal"], [class*="blocklyDialog"] {
   border-radius: var(--ds-radius-lg);
@@ -185,15 +185,15 @@ h1, h2, h3, h4, h5, h6,
   border-top: 1px solid rgba(128, 128, 128, 0.06);
 }
 
-/* ─── Dropdown & Menu ─────────────────────────────────── */
+/* 鈹€鈹€鈹€ Dropdown & Menu 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 [class*="dropdown"], [class*="menu"], [class*="select"] {
   border-radius: var(--ds-radius-md) !important;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
   border: 1px solid rgba(128, 128, 128, 0.06) !important;
-  overflow: hidden;
+
 }
 
-/* ─── Tabs ────────────────────────────────────────────── */
+/* 鈹€鈹€鈹€ Tabs 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 [class*="tab"] {
   transition: all var(--ds-transition) !important;
 }
@@ -202,7 +202,7 @@ h1, h2, h3, h4, h5, h6,
   position: relative;
 }
 
-/* ─── Tooltip ──────────────────────────────────────────── */
+/* 鈹€鈹€鈹€ Tooltip 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 [class*="tooltip"], [role="tooltip"] {
   border-radius: 4px !important;
   box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important;
@@ -212,14 +212,14 @@ h1, h2, h3, h4, h5, h6,
   -webkit-backdrop-filter: blur(8px);
 }
 
-/* ─── Loading Spinner ──────────────────────────────────── */
+/* 鈹€鈹€鈹€ Loading Spinner 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 [class*="spinner"], [class*="loading"] {
   border-width: 2px !important;
   border-color: rgba(128,128,128,0.08) !important;
   border-top-color: rgb(var(--theme-color-0, 41, 126, 255)) !important;
 }
 
-/* ─── AI Lab specific refinements ─────────────────────── */
+/* 鈹€鈹€鈹€ AI Lab specific refinements 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 .ai_lab_dialog-wrapper_3Lku- { border-radius: 12px !important; overflow: hidden; }
 .ai_lab_dialog-header_2ZH9e { border-radius: 12px 12px 0 0 !important; }
 .ai_lab_outside-wrapper_1IEDF { border-radius: 10px !important; transition: all 0.25s ease !important; }
@@ -239,15 +239,15 @@ h1, h2, h3, h4, h5, h6,
   box-shadow: 0 6px 20px rgba(255, 153, 72, 0.35) !important;
 }
 
-/* ─── Smooth scrolling (html only, not * to avoid perf impact) ─── */
+/* 鈹€鈹€鈹€ Smooth scrolling (html only, not * to avoid perf impact) 鈹€鈹€鈹€ */
 html {
   scroll-behavior: smooth;
 }
 
-/* ─── Editor dark-text overrides ──────────────────── */
+/* 鈹€鈹€鈹€ Editor dark-text overrides 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 /* Target specific hardcoded dark text colors from the original
    kitten.css (#212326, #000) that become invisible on dark bg.
-   Only affects elements with dark text — does NOT blanket-body. */
+   Only affects elements with dark text 鈥?does NOT blanket-body. */
 
 /* Asset/sprite/variable names in the editor sidebar */
 [class*="name_container"] [class*="name_input"],
@@ -265,19 +265,19 @@ html {
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* Header toolbar text — file name, menu labels */
-[class*="header_left"] span,
-[class*="header_left"] div,
-[class*="header_center"] span,
-[class*="header_center"] div,
-[class*="header_right"] span,
-[class*="header_right"] div {
+/* Header toolbar text 鈥?file name, menu labels */
+body[data-theme="theme/ultra"] [class*="header_left"] span,
+body[data-theme="theme/ultra"] [class*="header_left"] div,
+body[data-theme="theme/ultra"] [class*="header_center"] span,
+body[data-theme="theme/ultra"] [class*="header_center"] div,
+body[data-theme="theme/ultra"] [class*="header_right"] span,
+body[data-theme="theme/ultra"] [class*="header_right"] div {
   color: rgba(255, 255, 255, 0.85);
 }
 
 /* Help menu button in header */
-#header-help-btn,
-#header-setting-btn {
+body[data-theme="theme/ultra"] #header-help-btn,
+body[data-theme="theme/ultra"] #header-setting-btn {
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
