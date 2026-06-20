@@ -132,6 +132,7 @@
 <script src="./kitten.822d814413fb10654fde.js?v=14"></script>
 <script src="./extension-loader-v2.js?v=14"></script>
 <script src="./extension-manager.js?v=14"></script>
+<script src="./settings-runtime.js?v=14"></script>
 <script>
 // K4 Ultra — inject custom appearance from k4-settings.json
 (function(){try{var fs=require('fs');var path=require('path');var base=path.join(__dirname,'..');var sp=path.join(base,'k4-settings.json');if(!fs.existsSync(sp))return;var c=JSON.parse(fs.readFileSync(sp,'utf8'));var a=c.appearance;if(!a)return;var css=':root{';if(a.primaryColor)css+='--k4-primary:'+a.primaryColor+';';if(a.secondaryColor)css+='--k4-secondary:'+a.secondaryColor+';';if(a.bgColor)css+='--k4-bg:'+a.bgColor+';';if(a.textColor)css+='--k4-text:'+a.textColor+';';if(a.glassMorphism){css+='--k4-glass-blur:'+(a.glassBlur||12)+'px;';css+='--k4-glass-opacity:'+(a.glassOpacity||15)+';'}css+='}';if(a.bgImage){css+='#kitten-loader-wrap::before{content:\"\";position:absolute;inset:0;z-index:-1;background:url(\"'+a.bgImage+'\") center/cover no-repeat;';if(a.glassMorphism)css+='filter:blur('+(a.glassBlur||12)+'px);opacity:0.3;';css+='}';}if(a.accentGlow&&a.primaryColor){css+='.kitten-loader-logo{text-shadow:0 0 20px '+a.primaryColor+'99,0 0 60px '+a.primaryColor+'4d,0 0 120px '+a.primaryColor+'26!important;}';}var s=document.createElement('style');s.id='k4-custom-appearance';s.textContent=css;document.head.appendChild(s);}catch(e){}})();

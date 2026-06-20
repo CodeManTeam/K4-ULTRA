@@ -128,6 +128,19 @@
     writeJSON(SETTINGS_PATH, payload);
     loadingCfg.activeTheme = general.theme;
     writeJSON(LOADING_CONFIG, loadingCfg);
+
+    // 实时生效 — 调用 K4Settings runtime bridge
+    try {
+      const K4S = (window as any).K4Settings;
+      if (K4S) {
+        K4S.write(payload);
+        K4S.applyAppearance(appearance);
+        K4S.applyGeneral(general);
+        K4S.applyEditor(editor);
+        K4S.applyDebug(debug);
+      }
+    } catch (_) {}
+
     uiStore.notify({ type: 'success', message: t('settings.saved') });
     onclose();
   }
@@ -273,11 +286,45 @@
       <div class="k4-setting-row">
         <label class="k4-setting-label">{t('extensions.maxMemory')}</label>
         <select class="k4-select" bind:value={extensions.maxMemory}>
+          <option value={64}>64 MB</option>
           <option value={128}>128 MB</option>
           <option value={256}>256 MB</option>
           <option value={512}>512 MB</option>
-          <option value={1024}>1 GB</option>
         </select>
+      </div>
+
+      <div class="k4-section-header" style="margin-top: 16px;">
+        <span class="k4-step-value">{t('extensions.loaded')}</span>
+        <button class="k4-step-btn" onclick={refreshExtensions} title={t('extensions.refresh')}>
+          ↻
+        </button>
+      </div>
+      {#if extError}
+        <div class="k4-ext-error">{extError}</div>
+      {/if}
+      <div class="k4-ext-list">
+        {#if loadedExts.length === 0}
+          <div class="k4-ext-empty">{t('extensions.empty')}</div>
+          <div class="k4-ext-hint">{t('extensions.hint')}</div>
+        {:else}
+          {#each loadedExts as ext}
+            <div class="k4-ext-item" class:k4-ext-disabled={!ext.enabled}>
+              <div class="k4-ext-info">
+                <div class="k4-ext-name">{ext.name}</div>
+                <div class="k4-ext-meta">
+                  <span class="k4-ext-version">{ext.version}</span>
+                  {#if ext.description}
+                    <span class="k4-ext-desc">{ext.description}</span>
+                  {/if}
+                </div>
+              </div>
+              <label class="k4-ext-toggle">
+                <input type="checkbox" checked={ext.enabled} onchange={() => toggleExtension(ext.id)} />
+                <span class="k4-ext-toggle-knob"></span>
+              </label>
+            </div>
+          {/each}
+        {/if}
       </div>
     </section>
 
@@ -290,45 +337,6 @@
       <Switch label={t('debug.verboseLogging')} bind:checked={debug.verboseLogging} />
       <Switch label={t('debug.showBlockIds')} bind:checked={debug.showBlockIds} />
       <Switch label={t('debug.perfMonitor')} bind:checked={debug.perfMonitor} />
-    </section>
-
-    <div class="k4-divider"></div>
-
-    <!-- EXTENSION LIST -->
-    <section class="k4-section">
-      <div class="k4-section-header">
-        <h3 class="k4-section-title">{t('section.plugins', { count: loadedExts.length })}</h3>
-        <Button size="sm" variant="secondary" onclick={refreshExtensions}>{t('plugins.refresh')}</Button>
-      </div>
-
-      {#if extError}
-        <div class="k4-ext-error">{t('plugins.error')}: {extError}</div>
-      {/if}
-
-      {#if loadedExts.length === 0}
-        <p class="k4-ext-empty">{t('plugins.empty')}</p>
-      {:else}
-        <div class="k4-ext-list">
-          {#each loadedExts as ext (ext.id)}
-            <div class="k4-ext-item" class:k4-ext-disabled={!ext.enabled}>
-              <div class="k4-ext-info">
-                <div class="k4-ext-name">{ext.name}</div>
-                <div class="k4-ext-meta">
-                  <span class="k4-ext-version">v{ext.version}</span>
-                  {#if ext.description}
-                    <span class="k4-ext-desc">— {ext.description}</span>
-                  {/if}
-                </div>
-              </div>
-              <label class="k4-ext-toggle">
-                <input type="checkbox" checked={ext.enabled} onchange={() => toggleExtension(ext.id)} />
-                <span class="k4-ext-toggle-knob"></span>
-              </label>
-            </div>
-          {/each}
-        </div>
-      {/if}
-      <p class="k4-ext-hint">{t('plugins.hint')}</p>
     </section>
 
     <div class="k4-divider"></div>
@@ -358,12 +366,12 @@
   .k4-settings-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 640px; max-height: 80vh; background: var(--oc-gray-800); border-radius: var(--oc-window-radius); box-shadow: 0 20px 60px rgba(0,0,0,0.5); z-index: 5010; display: flex; flex-direction: column; overflow: hidden; animation: panelIn 0.3s ease-out; border: 1px solid var(--oc-gray-700); }
   @keyframes panelIn { from { transform: translate(-50%,-50%) scale(0.9); opacity: 0; } to { transform: translate(-50%,-50%) scale(1); opacity: 1; } }
   .k4-panel-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid var(--oc-gray-700); flex-shrink: 0; }
-  .k4-panel-header h2 { font-size: var(--oc-text-xl); font-weight: var(--oc-weight-semibold); color: var(--oc-white-90); margin: 0; }
-  .k4-panel-close { background: none; border: none; color: var(--oc-white-50); font-size: 24px; cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px; transition: background 0.15s, color 0.15s; }
-  .k4-panel-close:hover { background: var(--oc-gray-500); color: var(--oc-white); }
-  .k4-panel-body { flex: 1; overflow-y: auto; padding: 8px 0; }
-  .k4-section { padding: 8px 24px; }
-  .k4-section-title { font-size: var(--oc-text-sm); font-weight: var(--oc-weight-semibold); color: var(--oc-white-50); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; padding-top: 8px; }
+  .k4-panel-header h2 { font-size: var(--oc-text-lg); font-weight: var(--oc-weight-bold); color: var(--oc-white-90); margin: 0; }
+  .k4-panel-close { width: 28px; height: 28px; border: none; background: none; color: var(--oc-white-50); font-size: 20px; cursor: pointer; border-radius: 6px; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
+  .k4-panel-close:hover { background: var(--oc-gray-600); color: var(--oc-white-90); }
+  .k4-panel-body { flex: 1; overflow-y: auto; padding: 24px; padding-bottom: 8px; }
+  .k4-section { margin-bottom: 16px; }
+  .k4-section-title { font-size: var(--oc-text-sm); font-weight: var(--oc-weight-semibold); color: var(--oc-white-70); text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 12px 0; position: sticky; top: 8px; }
   .k4-setting-row { display: flex; align-items: center; justify-content: space-between; height: 36px; }
   .k4-setting-label { font-size: var(--oc-text-base); font-weight: var(--oc-weight-medium); color: var(--oc-white-80); }
   .k4-divider { height: 1px; background: var(--oc-gray-700); margin: 8px 24px; }

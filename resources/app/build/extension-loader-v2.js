@@ -308,16 +308,26 @@
       var loaded = [];
       var loadedBaseNames = {};
 
-      // 默认仅加载 Blink .k4ultra 扩展。如需开发模式加载目录，可在 manifest 中开启 devMode。
+      // 读取 k4-settings.json 获取扩展配置
       var allowDirMode = false;
+      var extConfig = {};
+      try {
+        var settingsDir = dir.replace(/extensions\/?$/, '');
+        var settingsPath = settingsDir + '/k4-settings.json';
+        if (K4.fs.exists(settingsPath)) {
+          var saved = JSON.parse(K4.fs.readFile(settingsPath) || '{}');
+          if (saved.extensions) extConfig = saved.extensions;
+        }
+      } catch(e) {}
+      // 兼容旧版 loader-config.json
       try {
         var cfgPath = dir + '/loader-config.json';
         if (K4.fs.exists(cfgPath)) {
           var cfg = JSON.parse(K4.fs.readFile(cfgPath) || '{}');
-          allowDirMode = cfg.devMode === true;
+          if (cfg.devMode === true) extConfig.devMode = true;
         }
       } catch(e) {}
-
+      allowDirMode = extConfig.devMode === true;
       items.filter(function(f) { return f.toLowerCase().endsWith('.k4ultra'); })
         .forEach(function(f) {
           loadExtension(dir + '/' + f, true);
