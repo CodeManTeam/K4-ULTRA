@@ -181,7 +181,18 @@
       }
     } catch (_) {}
 
-    uiStore.notify({ type: 'success', message: t('settings.saved') });
+    // If loading theme changed, offer reload
+    const oldTheme = loadingCfg.activeTheme;
+    if (general.theme !== oldTheme) {
+      uiStore.notify({ type: 'warning', message: t('general.reload_hint'), duration: 5000 });
+      setTimeout(() => {
+        if (confirm(t('general.reload_confirm') || 'Loading theme changed. Reload now?')) {
+          location.reload();
+        }
+      }, 300);
+    } else {
+      uiStore.notify({ type: 'success', message: t('settings.saved') });
+    }
     onclose();
   }
 </script>
