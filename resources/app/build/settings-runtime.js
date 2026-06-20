@@ -330,6 +330,12 @@
     css+='.k4-scope input:focus,.k4-scope textarea:focus,.k4-scope select:focus{border-color:'+p+'!important;box-shadow:0 0 0 3px '+rgba(p,0.1)+'!important;}';
     css+='[class*="spinner"],[class*="loading"]{border-top-color:'+p+'!important;}';
     css+='.k4-scope input,.k4-scope textarea,.k4-scope [contenteditable]{caret-color:'+p+'!important;}';
+    // Force header/topbar background to PRIMARY color (overrides theme-color-0)
+    css+='[class*="header"],[class*="Header"],[class*="menubar"],[class*="menu-bar"],[class*="nav-bar"]{background:'+p+'!important;background-color:'+p+'!important;}';
+    // Force all header children that use theme-color-0 to follow
+    css+='[class*="header"] *{background-color:transparent!important;}';
+    // Also set --theme-color-0 to primary RGB for elements using rgba(var(--theme-color-0),1)
+    css+='[class*="header"],[class*="Header"]{--theme-color-0:'+hexToRgbString(p)+'!important;}';
 
     if(a.bgImage){
       var ov=document.getElementById('k4-bg-image-overlay');

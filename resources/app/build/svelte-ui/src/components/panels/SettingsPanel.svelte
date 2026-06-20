@@ -196,7 +196,16 @@
       <div class="k4-setting-row"><label class="k4-setting-label">Secondary</label><div class="k4-color-row"><input type="color" class="k4-color-pick" bind:value={appearance.secondaryColor} /><code class="k4-color-hex">{appearance.secondaryColor}</code></div></div>
       <div class="k4-setting-row"><label class="k4-setting-label">Background</label><div class="k4-color-row"><input type="color" class="k4-color-pick" bind:value={appearance.bgColor} /><code class="k4-color-hex">{appearance.bgColor}</code></div></div>
       <div class="k4-setting-row"><label class="k4-setting-label">Text</label><div class="k4-color-row"><input type="color" class="k4-color-pick" bind:value={appearance.textColor} /><code class="k4-color-hex">{appearance.textColor}</code></div></div>
-      <div class="k4-setting-row"><label class="k4-setting-label">BG Image</label><input type="text" class="k4-input" bind:value={appearance.bgImage} placeholder="URL or local path..." /></div>
+      <div class="k4-setting-row"><label class="k4-setting-label">BG Image</label>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <input type="text" class="k4-input" style="width:180px;" bind:value={appearance.bgImage} placeholder="URL or click Browse..." />
+          <button class="k4-file-btn" onclick={() => { const inp = document.getElementById('k4-bg-file-input') as HTMLInputElement; if(inp) inp.click(); }}>📁</button>
+          <input type="file" id="k4-bg-file-input" accept="image/*" style="display:none;" onchange={(e) => {
+            const f = (e.target as HTMLInputElement).files?.[0];
+            if (f) { const r = new FileReader(); r.onload = () => { appearance.bgImage = r.result as string; }; r.readAsDataURL(f); }
+          }} />
+        </div>
+      </div>
       <Switch label="Accent Glow" bind:checked={appearance.accentGlow} />
       <div class="k4-divider-sub"></div>
       <Switch label="Global Glass Effect" bind:checked={appearance.glassMorphism} />
@@ -229,7 +238,16 @@
           {#if zones[activeZoneTab].enabled}
             <div class="k4-setting-row"><label class="k4-setting-label">BG Color</label><div class="k4-color-row"><input type="color" class="k4-color-pick" bind:value={zones[activeZoneTab].bgColor} /><code class="k4-color-hex">{zones[activeZoneTab].bgColor || 'none'}</code></div></div>
 
-            <div class="k4-setting-row"><label class="k4-setting-label">BG Image URL</label><input type="text" class="k4-input" bind:value={zones[activeZoneTab].bgImage} placeholder="https://... or local path" /></div>
+            <div class="k4-setting-row"><label class="k4-setting-label">BG Image</label>
+            <div style="display:flex;gap:4px;align-items:center;">
+              <input type="text" class="k4-input" style="width:160px;" bind:value={zones[activeZoneTab].bgImage} placeholder="URL or Browse..." />
+              <button class="k4-file-btn" style="font-size:13px;padding:0 6px;" onclick={() => { const inp = document.getElementById('k4-zone-file-'+activeZoneTab) as HTMLInputElement; if(inp) inp.click(); }}>📁</button>
+              <input type="file" id="k4-zone-file-{activeZoneTab}" accept="image/*" style="display:none;" onchange={(e) => {
+                const f = (e.target as HTMLInputElement).files?.[0];
+                if (f) { const r = new FileReader(); r.onload = () => { zones[activeZoneTab].bgImage = r.result as string; }; r.readAsDataURL(f); }
+              }} />
+            </div>
+          </div>
             {#if zones[activeZoneTab].bgImage}
               <div class="k4-setting-row"><label class="k4-setting-label">Image Size</label><select class="k4-select" bind:value={zones[activeZoneTab].bgSize}><option value="cover">Cover</option><option value="contain">Contain</option><option value="auto">Auto</option><option value="100% 100%">Stretch</option></select></div>
               <div class="k4-setting-row"><label class="k4-setting-label">Position</label><select class="k4-select" bind:value={zones[activeZoneTab].bgPosition}><option value="center">Center</option><option value="top">Top</option><option value="bottom">Bottom</option><option value="left">Left</option><option value="right">Right</option></select></div>
@@ -390,4 +408,6 @@
   .k4-about-line:last-child{border-bottom:none}
   .k4-about-label{color:var(--oc-white-50)}
   .k4-about-val{color:var(--oc-white-80);font-weight:500}
+  .k4-file-btn{width:32px;height:32px;border:1px solid var(--oc-gray-600);border-radius:6px;background:var(--oc-gray-850);color:var(--oc-white-70);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.15s}
+  .k4-file-btn:hover{background:var(--oc-gray-600)}
 </style>
