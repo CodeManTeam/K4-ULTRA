@@ -7,16 +7,16 @@
     "theme": "ultra"
   },
   "appearance": {
-    "primaryColor": "#297eff",
-    "secondaryColor": "#4790ff",
-    "bgColor": "#0a0a18",
+    "primaryColor": "#ff2970",
+    "secondaryColor": "#ff4785",
+    "bgColor": "#0f0008",
     "bgImage": "",
     "glassMorphism": false,
     "glassBlur": 12,
     "glassOpacity": 0.15,
     "accentGlow": true,
-    "textColor": "#e0e8ff",
-    "dataTheme": "theme/blue"
+    "textColor": "#ffd0e0",
+    "dataTheme": "theme/pink"
   },
   "editor": {
     "snapToGrid": true,

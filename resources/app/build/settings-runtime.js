@@ -88,25 +88,17 @@
     a = a || {};
     if (a.primaryColor) {
       setProp('--k4-primary', a.primaryColor);
-      var rgb = hexToRgbString(a.primaryColor);
-      setProp('--k4-primary-rgb', rgb);
-      // Generate full theme-color palette from primary (mimics native HSL system)
+      setProp('--k4-primary-rgb', hexToRgbString(a.primaryColor));
+      // Check if native preset is active (kitten.css handles the palette)
       var dt = document.body ? document.body.getAttribute('data-theme') : '';
-      if (!dt || dt === 'theme/ultra') {
-        // Use simple RGB darkening for custom colors
-        setProp('--theme-color-0', rgb);
-        setProp('--theme-color-s1-0', rgb);
-        setProp('--theme-color-s1-1', rgb);
-        var c = hexToRgb(a.primaryColor);
-        setProp('--theme-color-n1', Math.max(0,c.r-40)+','+Math.max(0,c.g-40)+','+Math.max(0,c.b-40));
-        setProp('--theme-color-n2', Math.max(0,c.r-80)+','+Math.max(0,c.g-80)+','+Math.max(0,c.b-80));
-      } else {
-        // Native preset: generate full HSL-based palette from primary
-        // The original kitten.js uses HSL[0]=hue, [1]=saturation%, [2]=lightness%
-        // We approximate from hex using the same logic
+      var isNative = dt && dt !== 'theme/ultra' && dt.startsWith('theme/');
+      if (!isNative) {
+        // Custom/ultra: generate full theme-color palette ourselves
         var pc = hexToRgb(a.primaryColor);
         generateHSLThemePalette(pc.r, pc.g, pc.b);
       }
+      // else: native preset - kitten.css body[data-theme="theme/orange"] handles ALL theme-color vars
+      // We must NOT set them via style.setProperty or we'd override the CSS cascade
     }
     if (a.secondaryColor) setProp('--k4-secondary', a.secondaryColor);
     if (a.bgColor) { setProp('--k4-bg', a.bgColor); setProp('--k4-bg-rgb', hexToRgbString(a.bgColor)); }
