@@ -161,5 +161,23 @@ injectCSS(css);
   loadFromNative();
   try { var s = readJSON(SETTINGS_PATH, {}); if (s.appearance) applyAppearance(s.appearance); if (s.general && s.general.theme) applyThemeToBody(s.general.theme); if (s.general && s.general.theme) applyThemeToBody(s.general.theme); } catch (e) {}
   waitForBridge(function () { var s = readJSON(SETTINGS_PATH, {}); if (s.editor) applyEditor(s.editor); if (s.general) applyGeneral(s.general); if (s.debug) applyDebug(s.debug); integrateNativeHeader(); });
+
+  // Apply theme colors to Blockly workspace grid
+  function applyBlocklyTheme(settings) {
+    try {
+      var bw = window.Blockly;
+      if (!bw || !bw.mainWorkspace) return;
+      var ws = bw.mainWorkspace;
+      var grid = ws.getGrid ? ws.getGrid() : null;
+      if (!grid) return;
+      // Get theme-color values from CSS (cascaded from body[data-theme])
+      var style = getComputedStyle(document.body);
+      var c9 = style.getPropertyValue('--theme-color-9').trim() || '255,240,232';
+      var c5 = style.getPropertyValue('--theme-color-5').trim() || '255,216,194';
+      grid.set_color && grid.set_color('rgba(' + c9 + ',1)', 'rgba(' + c5 + ',1)');
+      console.log('[K4] Blockly grid themed');
+    } catch(e) {}
+  }
+
   console.log('[K4 Settings] Runtime bridge initialized');
 })();

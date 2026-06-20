@@ -7,8 +7,7 @@
 /* 鈹€鈹€鈹€ OneConfig Theme 鈥?K4 Ultra override 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€ */
 /* Maps the React editor's theme-color-* variables to OneConfig palette.
    Add data-theme="theme/ultra" to <body> to activate. */
-body[data-theme="theme/ultra"],
-body[data-theme="theme/blue"] {
+body[data-theme="theme/ultra"] {
   --theme-color-0: 20,82,204;    /* oc-primary-600 */
   --theme-color-1: 37,100,214;
   --theme-color-2: 54,118,224;
