@@ -1,21 +1,22 @@
 {
   "general": {
     "autoSave": true,
+    "hardwareAccel": true,
     "showFps": false,
     "smoothZoom": true,
     "theme": "ultra"
   },
   "appearance": {
-    "primaryColor": "#ff2970",
-    "secondaryColor": "#ff4785",
-    "bgColor": "#b691a4",
+    "primaryColor": "#e53e3e",
+    "secondaryColor": "#ed64a6",
+    "bgColor": "#fff5f5",
     "bgImage": "",
     "glassMorphism": false,
     "glassBlur": 12,
     "glassOpacity": 0.15,
     "accentGlow": true,
-    "textColor": "#ffd0e0",
-    "dataTheme": "theme/pink"
+    "textColor": "#1a0000",
+    "dataTheme": ""
   },
   "editor": {
     "snapToGrid": true,
@@ -25,66 +26,15 @@
     "lineNumbers": true,
     "autoComplete": true
   },
-  "zones": {
-    "header": {
-      "enabled": false,
-      "bgColor": "",
-      "bgImage": "",
-      "bgSize": "cover",
-      "bgPosition": "center",
-      "opacity": 100,
-      "blur": 0,
-      "brightness": 100,
-      "borderRadius": 0,
-      "boxShadow": ""
-    },
-    "workspace": {
-      "enabled": false,
-      "bgColor": "",
-      "bgImage": "",
-      "bgSize": "cover",
-      "bgPosition": "center",
-      "opacity": 100,
-      "blur": 0,
-      "brightness": 100,
-      "borderRadius": 0,
-      "boxShadow": ""
-    },
-    "sidebar": {
-      "enabled": false,
-      "bgColor": "",
-      "bgImage": "",
-      "bgSize": "cover",
-      "bgPosition": "center",
-      "opacity": 100,
-      "blur": 0,
-      "brightness": 100,
-      "borderRadius": 0,
-      "boxShadow": ""
-    },
-    "stage": {
-      "enabled": false,
-      "bgColor": "",
-      "bgImage": "",
-      "bgSize": "cover",
-      "bgPosition": "center",
-      "opacity": 100,
-      "blur": 0,
-      "brightness": 100,
-      "borderRadius": 0,
-      "boxShadow": ""
-    },
-    "blockly_bg": {
-      "enabled": false,
-      "bgColor": "",
-      "bgImage": "",
-      "bgSize": "cover",
-      "bgPosition": "center",
-      "opacity": 100,
-      "blur": 0,
-      "brightness": 100,
-      "borderRadius": 0,
-      "boxShadow": ""
-    }
+  "extensions": {
+    "allowUnsigned": false,
+    "devMode": true,
+    "sandbox": true,
+    "maxMemory": 256
+  },
+  "debug": {
+    "verboseLogging": false,
+    "showBlockIds": false,
+    "perfMonitor": false
   }
 }

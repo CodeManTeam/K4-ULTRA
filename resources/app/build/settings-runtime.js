@@ -193,8 +193,11 @@
       props.push('-webkit-backdrop-filter:blur('+cfg.blur+'px)!important');
     }
     if (cfg.brightness !== undefined && cfg.brightness !== 100) props.push('filter:brightness('+(cfg.brightness/100)+')!important');
+    if (cfg.height !== undefined && cfg.height > 0) props.push('height:'+cfg.height+'px!important');
     if (cfg.borderRadius !== undefined) props.push('border-radius:'+cfg.borderRadius+'px!important');
     if (cfg.boxShadow) props.push('box-shadow:'+cfg.boxShadow+'!important');
+    if (cfg.height !== undefined && cfg.height > 0) props.push('min-height:'+cfg.height+'px!important');
+    if (cfg.height !== undefined && cfg.height > 0) props.push('max-height:'+cfg.height+'px!important');
 
     if (props.length > 0) {
       css = selector + '{' + props.join(';') + '}';

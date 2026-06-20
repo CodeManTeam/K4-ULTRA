@@ -91,7 +91,7 @@
   });
 
   // ─── Zone defaults ───
-  function defaultZone(): any { return { enabled: false, bgColor: '', bgImage: '', bgSize: 'cover', bgPosition: 'center', opacity: 100, blur: 0, brightness: 100, borderRadius: 0, boxShadow: '' }; }
+  function defaultZone(): any { return { enabled: false, bgColor: '', bgImage: '', bgSize: 'cover', bgPosition: 'center', opacity: 100, blur: 0, brightness: 100, borderRadius: 0, boxShadow: '', height: 0 }; }
   let zones = $state({
     header: { ...defaultZone(), ...(saved.zones?.header || {}) },
     workspace: { ...defaultZone(), ...(saved.zones?.workspace || {}) },
@@ -224,26 +224,28 @@
 
       {#if currentZone()}
         <div class="k4-zone-panel">
-          <Switch label="Enable Customization" bind:checked={currentZone().enabled} />
+          <Switch label="Enable Customization" bind:checked={zones[activeZoneTab].enabled} />
 
-          {#if currentZone().enabled}
-            <div class="k4-setting-row"><label class="k4-setting-label">BG Color</label><div class="k4-color-row"><input type="color" class="k4-color-pick" bind:value={currentZone().bgColor} /><code class="k4-color-hex">{currentZone().bgColor || 'none'}</code></div></div>
+          {#if zones[activeZoneTab].enabled}
+            <div class="k4-setting-row"><label class="k4-setting-label">BG Color</label><div class="k4-color-row"><input type="color" class="k4-color-pick" bind:value={zones[activeZoneTab].bgColor} /><code class="k4-color-hex">{zones[activeZoneTab].bgColor || 'none'}</code></div></div>
 
-            <div class="k4-setting-row"><label class="k4-setting-label">BG Image URL</label><input type="text" class="k4-input" bind:value={currentZone().bgImage} placeholder="https://... or local path" /></div>
-            {#if currentZone().bgImage}
-              <div class="k4-setting-row"><label class="k4-setting-label">Image Size</label><select class="k4-select" bind:value={currentZone().bgSize}><option value="cover">Cover</option><option value="contain">Contain</option><option value="auto">Auto</option><option value="100% 100%">Stretch</option></select></div>
-              <div class="k4-setting-row"><label class="k4-setting-label">Position</label><select class="k4-select" bind:value={currentZone().bgPosition}><option value="center">Center</option><option value="top">Top</option><option value="bottom">Bottom</option><option value="left">Left</option><option value="right">Right</option></select></div>
+            <div class="k4-setting-row"><label class="k4-setting-label">BG Image URL</label><input type="text" class="k4-input" bind:value={zones[activeZoneTab].bgImage} placeholder="https://... or local path" /></div>
+            {#if zones[activeZoneTab].bgImage}
+              <div class="k4-setting-row"><label class="k4-setting-label">Image Size</label><select class="k4-select" bind:value={zones[activeZoneTab].bgSize}><option value="cover">Cover</option><option value="contain">Contain</option><option value="auto">Auto</option><option value="100% 100%">Stretch</option></select></div>
+              <div class="k4-setting-row"><label class="k4-setting-label">Position</label><select class="k4-select" bind:value={zones[activeZoneTab].bgPosition}><option value="center">Center</option><option value="top">Top</option><option value="bottom">Bottom</option><option value="left">Left</option><option value="right">Right</option></select></div>
             {/if}
 
-            <div class="k4-setting-row"><label class="k4-setting-label">Opacity</label><div class="k4-stepper"><button class="k4-step-btn" onclick={() => currentZone().opacity = Math.max(10, currentZone().opacity - 10)}>-</button><span class="k4-step-value">{currentZone().opacity}%</span><button class="k4-step-btn" onclick={() => currentZone().opacity = Math.min(100, currentZone().opacity + 10)}>+</button></div></div>
+            <div class="k4-setting-row"><label class="k4-setting-label">Opacity</label><div class="k4-stepper"><button class="k4-step-btn" onclick={() => zones[activeZoneTab].opacity = Math.max(10, zones[activeZoneTab].opacity - 10)}>-</button><span class="k4-step-value">{zones[activeZoneTab].opacity}%</span><button class="k4-step-btn" onclick={() => zones[activeZoneTab].opacity = Math.min(100, zones[activeZoneTab].opacity + 10)}>+</button></div></div>
 
-            <div class="k4-setting-row"><label class="k4-setting-label">Frosted Blur</label><div class="k4-stepper"><button class="k4-step-btn" onclick={() => currentZone().blur = Math.max(0, currentZone().blur - 2)}>-</button><span class="k4-step-value">{currentZone().blur}px</span><button class="k4-step-btn" onclick={() => currentZone().blur = Math.min(40, currentZone().blur + 2)}>+</button></div></div>
+            <div class="k4-setting-row"><label class="k4-setting-label">Frosted Blur</label><div class="k4-stepper"><button class="k4-step-btn" onclick={() => zones[activeZoneTab].blur = Math.max(0, zones[activeZoneTab].blur - 2)}>-</button><span class="k4-step-value">{zones[activeZoneTab].blur}px</span><button class="k4-step-btn" onclick={() => zones[activeZoneTab].blur = Math.min(40, zones[activeZoneTab].blur + 2)}>+</button></div></div>
 
-            <div class="k4-setting-row"><label class="k4-setting-label">Brightness</label><div class="k4-stepper"><button class="k4-step-btn" onclick={() => currentZone().brightness = Math.max(20, currentZone().brightness - 10)}>-</button><span class="k4-step-value">{currentZone().brightness}%</span><button class="k4-step-btn" onclick={() => currentZone().brightness = Math.min(200, currentZone().brightness + 10)}>+</button></div></div>
+            <div class="k4-setting-row"><label class="k4-setting-label">Brightness</label><div class="k4-stepper"><button class="k4-step-btn" onclick={() => zones[activeZoneTab].brightness = Math.max(20, zones[activeZoneTab].brightness - 10)}>-</button><span class="k4-step-value">{zones[activeZoneTab].brightness}%</span><button class="k4-step-btn" onclick={() => zones[activeZoneTab].brightness = Math.min(200, zones[activeZoneTab].brightness + 10)}>+</button></div></div>
 
-            <div class="k4-setting-row"><label class="k4-setting-label">Border Radius</label><div class="k4-stepper"><button class="k4-step-btn" onclick={() => currentZone().borderRadius = Math.max(0, currentZone().borderRadius - 4)}>-</button><span class="k4-step-value">{currentZone().borderRadius}px</span><button class="k4-step-btn" onclick={() => currentZone().borderRadius = Math.min(40, currentZone().borderRadius + 4)}>+</button></div></div>
+            <div class="k4-setting-row"><label class="k4-setting-label">Height (px)</label><div class="k4-stepper"><button class="k4-step-btn" onclick={() => zones[activeZoneTab].height = Math.max(0, zones[activeZoneTab].height - 8)}>-</button><span class="k4-step-value">{zones[activeZoneTab].height || "auto"}</span><button class="k4-step-btn" onclick={() => zones[activeZoneTab].height = Math.min(200, zones[activeZoneTab].height + 8)}>+</button></div></div>
 
-            <div class="k4-setting-row"><label class="k4-setting-label">Box Shadow</label><input type="text" class="k4-input" bind:value={currentZone().boxShadow} placeholder="e.g. 0 4px 20px rgba(0,0,0,0.3)" /></div>
+            <div class="k4-setting-row"><label class="k4-setting-label">Border Radius</label><div class="k4-stepper"><button class="k4-step-btn" onclick={() => zones[activeZoneTab].borderRadius = Math.max(0, zones[activeZoneTab].borderRadius - 4)}>-</button><span class="k4-step-value">{zones[activeZoneTab].borderRadius}px</span><button class="k4-step-btn" onclick={() => zones[activeZoneTab].borderRadius = Math.min(40, zones[activeZoneTab].borderRadius + 4)}>+</button></div></div>
+
+            <div class="k4-setting-row"><label class="k4-setting-label">Box Shadow</label><input type="text" class="k4-input" bind:value={zones[activeZoneTab].boxShadow} placeholder="e.g. 0 4px 20px rgba(0,0,0,0.3)" /></div>
           {/if}
         </div>
       {/if}
