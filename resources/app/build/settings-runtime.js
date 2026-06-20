@@ -9,8 +9,42 @@
   })();
   var SETTINGS_PATH = APP_DIR ? APP_DIR + '/k4-settings.json' : '';
 
-  function readJSON(path, fallback) { try { if (typeof require !== 'undefined') { var fs = require('fs'); var p = require('path'); var full = p.resolve(path); if (fs.existsSync(full)) return JSON.parse(fs.readFileSync(full, 'utf8')); } } catch (e) {} return fallback || {}; }
-  function writeJSON(path, data) { try { if (typeof require !== 'undefined') { var fs = require('fs'); fs.writeFileSync(path, JSON.stringify(data, null, 2), 'utf8'); } } catch (e) { console.warn('[K4 Settings] write failed:', path, e.message); } }
+  function readJSON(path, fallback) {
+    try {
+      // Try preload FS first (more reliable in Electron renderer)
+      if (typeof FS !== 'undefined' && FS.readFile) {
+        if (FS.exists(path)) return JSON.parse(FS.readFile(path));
+      }
+    } catch(e) {}
+    try {
+      if (typeof require !== 'undefined') {
+        var fs = require('fs'); var p = require('path'); var full = p.resolve(path);
+        if (fs.existsSync(full)) return JSON.parse(fs.readFileSync(full, 'utf8'));
+      }
+    } catch (e) {}
+    return fallback || {};
+  }
+  function writeJSON(path, data) {
+    var str = JSON.stringify(data, null, 2);
+    try {
+      // Try preload FS first
+      if (typeof FS !== 'undefined' && FS.writeFile) {
+        FS.writeFile(path, str);
+        console.log('[K4 Settings] Saved via FS:', path);
+        return;
+      }
+    } catch(e) {}
+    try {
+      if (typeof require !== 'undefined') {
+        var fs = require('fs');
+        fs.writeFileSync(path, str, 'utf8');
+        console.log('[K4 Settings] Saved via require:', path);
+        return;
+      }
+    } catch (e) {
+      console.warn('[K4 Settings] write failed:', path, e.message);
+    }
+  }
 
   function hexToRgb(hex) { hex = hex.replace('#', ''); if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2]; return { r: parseInt(hex.substring(0,2),16), g: parseInt(hex.substring(2,4),16), b: parseInt(hex.substring(4,6),16) }; }
   function hexToRgbString(hex) { var c = hexToRgb(hex); return c.r+','+c.g+','+c.b; }
@@ -418,26 +452,34 @@
   };
 
   // ─── Startup ───
+  var s = readJSON(SETTINGS_PATH, {});
+  var fileEmpty = !s || Object.keys(s).length === 0;
+  
+  // Import native localStorage settings -> merge into s (only if s is missing fields)
   try{
     var ns=readNativeSettings();
     if(Object.keys(ns).length>0){
-      var s=readJSON(SETTINGS_PATH,{}),ch=false;
-      if(!s.general){s.general={};ch=true;}
-      if(ns.autoSave!==undefined&&s.general.autoSave===undefined){s.general.autoSave=ns.autoSave;ch=true;}
-      if(ns.theme!==undefined&&!s.general.theme){s.general.theme=ns.theme;ch=true;}
-      if(!s.editor){s.editor={};ch=true;}
-      if(ns.fontSize!==undefined&&s.editor.fontSize===undefined){s.editor.fontSize=ns.fontSize;ch=true;}
-      if(ch){writeJSON(SETTINGS_PATH,s);}
+      if(!s.general) s.general={};
+      if(ns.autoSave!==undefined&&s.general.autoSave===undefined) s.general.autoSave=ns.autoSave;
+      if(ns.theme!==undefined&&!s.general.theme) s.general.theme=ns.theme;
+      if(!s.editor) s.editor={};
+      if(ns.fontSize!==undefined&&s.editor.fontSize===undefined) s.editor.fontSize=ns.fontSize;
     }
   }catch(e){}
-
-  try{
-    var s=readJSON(SETTINGS_PATH,{});
-    if(s.appearance)applyAppearance(s.appearance);
-    if(s.general)applyGeneral(s.general);
-    if(s.editor)applyEditor(s.editor);
-    if(s.zones)applyZones(s.zones);
-  }catch(e){}
+  
+  // Apply appearance (must come first - sets body[data-theme] and palette)
+  if(s.appearance) applyAppearance(s.appearance);
+  if(s.general) applyGeneral(s.general);
+  if(s.editor) applyEditor(s.editor);
+  if(s.zones) applyZones(s.zones);
+  
+  // Only save back if we actually imported new data INTO an existing file
+  if(!fileEmpty) {
+    try { writeJSON(SETTINGS_PATH, s); } catch(e) {}
+    console.log('[K4] Startup: settings applied from file');
+  } else {
+    console.log('[K4] Startup: no settings file, using defaults');
+  }
 
   // Start zone DOM observer
   setTimeout(function() {

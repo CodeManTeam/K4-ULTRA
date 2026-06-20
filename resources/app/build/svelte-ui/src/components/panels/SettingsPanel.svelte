@@ -51,11 +51,14 @@
   const LOADING_CONFIG = APP_DIR ? APP_DIR.replaceAll('\\', '/') + '/loading-config.json' : '';
 
   function readJSON(path: string, fallback: any): any {
-    try { if (FS && FS.exists(path)) return JSON.parse(FS.readFile(path)); } catch (_) {}
+    try { if (typeof FS !== 'undefined' && FS.readFile && FS.exists(path)) return JSON.parse(FS.readFile(path)); } catch (_) {}
+    try { if (typeof require !== 'undefined') { var f = require('fs'); var p = require('path'); var fp = p.resolve(path); if (f.existsSync(fp)) return JSON.parse(f.readFileSync(fp, 'utf8')); } } catch (_) {}
     return fallback;
   }
   function writeJSON(path: string, data: any): void {
-    try { if (FS) FS.writeFile(path, JSON.stringify(data, null, 2)); } catch (_) {}
+    var str = JSON.stringify(data, null, 2);
+    try { if (typeof FS !== 'undefined' && FS.writeFile) { FS.writeFile(path, str); return; } } catch (_) {}
+    try { if (typeof require !== 'undefined') { require('fs').writeFileSync(path, str, 'utf8'); } } catch (_) {}
   }
 
   const saved = readJSON(SETTINGS_PATH, {});
