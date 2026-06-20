@@ -24,5 +24,67 @@
     "fontSize": 14,
     "lineNumbers": true,
     "autoComplete": true
+  },
+  "zones": {
+    "header": {
+      "enabled": false,
+      "bgColor": "",
+      "bgImage": "",
+      "bgSize": "cover",
+      "bgPosition": "center",
+      "opacity": 100,
+      "blur": 0,
+      "brightness": 100,
+      "borderRadius": 0,
+      "boxShadow": ""
+    },
+    "workspace": {
+      "enabled": false,
+      "bgColor": "",
+      "bgImage": "",
+      "bgSize": "cover",
+      "bgPosition": "center",
+      "opacity": 100,
+      "blur": 0,
+      "brightness": 100,
+      "borderRadius": 0,
+      "boxShadow": ""
+    },
+    "sidebar": {
+      "enabled": false,
+      "bgColor": "",
+      "bgImage": "",
+      "bgSize": "cover",
+      "bgPosition": "center",
+      "opacity": 100,
+      "blur": 0,
+      "brightness": 100,
+      "borderRadius": 0,
+      "boxShadow": ""
+    },
+    "stage": {
+      "enabled": false,
+      "bgColor": "",
+      "bgImage": "",
+      "bgSize": "cover",
+      "bgPosition": "center",
+      "opacity": 100,
+      "blur": 0,
+      "brightness": 100,
+      "borderRadius": 0,
+      "boxShadow": ""
+    },
+    "blockly_bg": {
+      "enabled": false,
+      "bgColor": "",
+      "bgImage": "",
+      "bgSize": "cover",
+      "bgPosition": "center",
+      "opacity": 100,
+      "blur": 0,
+      "brightness": 100,
+      "borderRadius": 0,
+      "boxShadow": ""
+    }
   }
 }
