@@ -56,6 +56,15 @@ css += '.k4-scope a,.k4-scope [class*="link"]{color:'+s+';}';
     css += '[class*="spinner"],[class*="loading"]{border-top-color:'+p+'!important;}';
     css += '.k4-scope input,.k4-scope textarea,.k4-scope [contenteditable]{caret-color:'+p+'!important;}';
     if(a.bgImage){var ov=document.getElementById('k4-bg-image-overlay');if(!ov){ov=document.createElement('div');ov.id='k4-bg-image-overlay';ov.style.cssText='position:fixed;inset:0;z-index:-1;pointer-events:none;';document.body.appendChild(ov)}ov.style.backgroundImage='url('+a.bgImage+')';ov.style.backgroundSize='cover';ov.style.backgroundPosition='center'}
+
+  // Auto-detect dark/light mode from bgColor
+  var bgRgb2 = hexToRgb(a.bgColor || '#050508');
+  var brightness = (bgRgb2.r * 299 + bgRgb2.g * 587 + bgRgb2.b * 114) / 1000;
+  if (document.body) {
+    document.body.classList.remove('k4-dark', 'k4-light');
+    document.body.classList.add(brightness > 128 ? 'k4-light' : 'k4-dark');
+  }
+
 injectCSS(css);
     console.log('[K4] Appearance applied:', JSON.stringify({p:p,bg:bg}));
   }
@@ -68,7 +77,7 @@ injectCSS(css);
 
   function applyDebug(d) { d = d || {}; window.__k4_debug = window.__k4_debug || {}; if (d.verboseLogging !== undefined) window.__k4_debug.verbose = d.verboseLogging; if (d.perfMonitor !== undefined) window.__k4_debug.perf = d.perfMonitor; if (d.showBlockIds !== undefined) { var bus = window.__k4bus; if (bus) bus.emit('redux-dispatch', {type:'SETTINGS_UPDATE',payload:{showBlockIds:d.showBlockIds}}); } }
 
-  function applyAll() { var s = readJSON(SETTINGS_PATH, {}); if (!s || Object.keys(s).length===0) return; if (s.appearance) applyAppearance(s.appearance); if (s.general) applyGeneral(s.general); if (s.editor) applyEditor(s.editor); if (s.debug) applyDebug(s.debug); }
+  function applyAll() { var s = readJSON(SETTINGS_PATH, {}); if (!s || Object.keys(s).length===0) return; if (s.appearance) applyAppearance(s.appearance); if (s.general && s.general.theme) applyThemeToBody(s.general.theme); if (s.general) applyGeneral(s.general); if (s.editor) applyEditor(s.editor); if (s.debug) applyDebug(s.debug); }
 
   function waitForBridge(cb) { var a=0; function chk(){a++;if(window.__k4bus&&window.__k4bus.emit){cb();return;}if(a<150)setTimeout(chk,200);} setTimeout(chk,500); }
 
@@ -86,7 +95,7 @@ injectCSS(css);
   window.K4Settings = { read: function(){return readJSON(SETTINGS_PATH,{});}, write: function(d){writeJSON(SETTINGS_PATH,d);}, apply: applyAll, applyAppearance: applyAppearance, applyGeneral: applyGeneral, applyEditor: applyEditor, applyDebug: applyDebug };
 
   loadFromNative();
-  try { var s = readJSON(SETTINGS_PATH, {}); if (s.appearance) applyAppearance(s.appearance); if (s.general && s.general.theme) applyThemeToBody(s.general.theme); } catch (e) {}
+  try { var s = readJSON(SETTINGS_PATH, {}); if (s.appearance) applyAppearance(s.appearance); if (s.general && s.general.theme) applyThemeToBody(s.general.theme); if (s.general && s.general.theme) applyThemeToBody(s.general.theme); } catch (e) {}
   waitForBridge(function () { var s = readJSON(SETTINGS_PATH, {}); if (s.editor) applyEditor(s.editor); if (s.general) applyGeneral(s.general); if (s.debug) applyDebug(s.debug); integrateNativeHeader(); });
   console.log('[K4 Settings] Runtime bridge initialized');
 })();

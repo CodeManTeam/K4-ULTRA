@@ -271,3 +271,30 @@ html {
 [class*="footer"] {
   color: rgba(255, 255, 255, 0.7);
 }
+
+
+/* ─── Light theme overrides ─────────────────────────────── */
+body.k4-light {
+  --theme-color-t:  30,30,35;
+  --theme-color-t1: 60,60,70;
+  --theme-color-t3: 90,90,100;
+  --theme-color-t5: 120,120,130;
+  --theme-color-t7: 150,150,160;
+}
+
+/* Invert dark-text overrides for light backgrounds */
+body.k4-light [class*="name_container"] [class*="name_input"],
+body.k4-light [class*="name_container"] [class*="name"]:not([class*="name_input"]),
+body.k4-light [class*="info_container"] [class*="name"],
+body.k4-light [class*="sprite"] [class*="name"] {
+  color: rgba(20, 20, 30, 0.9);
+}
+body.k4-light [class*="dialog"] [class*="header"],
+body.k4-light [class*="dialog"] [class*="title"],
+body.k4-light [class*="modal"] [class*="header"],
+body.k4-light [class*="modal"] [class*="title"] {
+  color: rgba(20, 20, 30, 0.95);
+}
+body.k4-light [class*="footer"] {
+  color: rgba(60, 60, 70, 0.8);
+}

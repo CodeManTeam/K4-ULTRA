@@ -9,6 +9,34 @@
 
   // i18n: locale reactivity
   let _lang = $state('zh-CN');
+
+// ─── 预设主题 ───
+  const PRESETS = [
+    { name: 'Ultra 紫', primary: '#583cdc', secondary: '#00b4ff', bg: '#050508', text: '#ffffff', dark: true },
+    { name: 'Ultra 蓝', primary: '#1967ff', secondary: '#00d4aa', bg: '#0a0a14', text: '#e8e8f0', dark: true },
+    { name: '暗夜黑', primary: '#aaaaaa', secondary: '#666666', bg: '#000000', text: '#cccccc', dark: true },
+    { name: '赛博绿', primary: '#00ff88', secondary: '#00ccff', bg: '#051208', text: '#d0ffe0', dark: true },
+    { name: '暖橙', primary: '#ff6b35', secondary: '#ffc107', bg: '#1a0f08', text: '#ffe8d0', dark: true },
+    { name: '极简白', primary: '#333333', secondary: '#888888', bg: '#f0f0f5', text: '#1a1a1a', dark: false },
+    { name: '纸张', primary: '#2c5282', secondary: '#718096', bg: '#fefefe', text: '#1a202c', dark: false },
+    { name: '樱花', primary: '#e53e3e', secondary: '#ed64a6', bg: '#fff5f5', text: '#1a0000', dark: false },
+  ];
+
+  function applyPreset(p: typeof PRESETS[0]) {
+    appearance.primaryColor = p.primary;
+    appearance.secondaryColor = p.secondary;
+    appearance.bgColor = p.bg;
+    appearance.textColor = p.text;
+    if (p.dark) {
+      document.body.classList.remove('k4-light');
+      document.body.classList.add('k4-dark');
+    } else {
+      document.body.classList.remove('k4-dark');
+      document.body.classList.add('k4-light');
+    }
+  }
+
+  let selectedPreset = $state('');
   localeStore.subscribe(v => _lang = v);
 
   const FS = (window as any).FS;
@@ -158,6 +186,21 @@
     <!-- APPEARANCE -->
     <section class="k4-section">
       <h3 class="k4-section-title">{t('section.appearance')}</h3>
+
+      <!-- Preset selector -->
+      <div class="k4-setting-row" style="margin-bottom:14px;">
+        <label class="k4-setting-label">{t('appearance.preset')}</label>
+        <select class="k4-select" style="min-width:160px;" bind:value={selectedPreset} onchange={(e) => {
+          const idx = PRESETS.findIndex(p => p.name === selectedPreset);
+          if (idx >= 0) applyPreset(PRESETS[idx]);
+        }}>
+          <option value="">{t('appearance.custom')}</option>
+          {#each PRESETS as p}
+            <option value={p.name}>{p.name}</option>
+          {/each}
+        </select>
+      </div>
+
 
       <div class="k4-setting-row">
         <label class="k4-setting-label">{t('appearance.primary')}</label>
