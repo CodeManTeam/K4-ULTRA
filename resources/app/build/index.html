@@ -1,95 +1,95 @@
-<!doctype html><html><head><meta charset="utf-8"><title>源码编辑器4.0</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+﻿<!doctype html><html><head><meta charset="utf-8"><title>Kitten4 Ultra</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
     #kitten-loader-wrap {
-      position: absolute; visibility: visible; width: 100%; height: 100%; top: 0; left: 0; z-index: 99;
-      background: #050508; text-align: center; display: flex; justify-content: center;
-      flex-direction: column; align-items: center; transition: all 0.4s ease-in-out;
+      position: fixed; visibility: visible; width: 100%; height: 100%; top: 0; left: 0; z-index: 99;
+      background: rgba(5, 5, 8, 0.78);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      text-align: center; display: flex; justify-content: center;
+      flex-direction: column; align-items: center;
+      transition: opacity 0.6s ease, backdrop-filter 0.8s ease, -webkit-backdrop-filter 0.8s ease, background 0.6s ease;
       overflow: hidden; font-family: 'Outfit', 'Noto Sans SC', 'PingFang SC', sans-serif;
     }
-    #root { height: 100%; width: 100%; }
-
+    #kitten-loader-wrap.k4-loader-done {
+      opacity: 0; pointer-events: none;
+      backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px);
+      background: rgba(5, 5, 8, 0);
+    }
+    #root { height: 100%; width: 100%; position: relative; z-index: 0; }
     .kitten-loader-background {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
-      background: radial-gradient(ellipse 80% 60% at 20% 80%, rgba(88,60,220,0.12) 0%, transparent 60%),
-                  radial-gradient(ellipse 60% 50% at 80% 20%, rgba(0,180,255,0.08) 0%, transparent 50%);
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
+      background: radial-gradient(ellipse 80% 60% at 20% 80%, rgba(88,60,220,0.08) 0%, transparent 60%),
+                  radial-gradient(ellipse 60% 50% at 80% 20%, rgba(0,180,255,0.05) 0%, transparent 50%);
     }
     .kitten-loader-grid {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
-      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
       background-size: 60px 60px;
       -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 60%, black 20%, transparent 70%);
       mask-image: radial-gradient(ellipse 70% 50% at 50% 60%, black 20%, transparent 70%);
       animation: gridPulse 8s ease-in-out infinite;
     }
-    @keyframes gridPulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
-
+    @keyframes gridPulse { 0%,100%{opacity:0.4} 50%{opacity:0.8} }
     .kitten-loader-scanline {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
-      pointer-events: none; background: linear-gradient(to bottom, transparent 50%, rgba(0,180,255,0.015) 50%);
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;
+      background: linear-gradient(to bottom, transparent 50%, rgba(0,180,255,0.01) 50%);
       background-size: 100% 3px;
     }
     .kitten-loader-glow {
-      position: absolute; top: 50%; left: 50%; width: 800px; height: 800px; z-index: 0;
+      position: absolute; top: 50%; left: 50%; width: 600px; height: 600px; z-index: 0; pointer-events: none;
       transform: translate(-50%, -50%);
-      background: radial-gradient(circle at 40% 50%, rgba(88,60,220,0.08) 0%, transparent 50%),
-                  radial-gradient(circle at 60% 50%, rgba(0,180,255,0.06) 0%, transparent 50%);
+      background: radial-gradient(circle at 40% 50%, rgba(88,60,220,0.06) 0%, transparent 50%),
+                  radial-gradient(circle at 60% 50%, rgba(0,180,255,0.04) 0%, transparent 50%);
       animation: glowOrbit 6s ease-in-out infinite alternate;
     }
-    @keyframes glowOrbit { 0%{transform:translate(-50%,-50%) scale(1)} 100%{transform:translate(-50%,-50%) scale(1.15)} }
-
+    @keyframes glowOrbit { 0%{transform:translate(-50%,-50%) scale(1)} 100%{transform:translate(-50%,-50%) scale(1.12)} }
     .kitten-loader-container { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-
     .kitten-loader-logo {
-      font-size: 80px; font-weight: 900; letter-spacing: 14px; color: #fff; text-transform: uppercase;
-      text-shadow: 0 0 20px rgba(88,60,220,0.6), 0 0 60px rgba(88,60,220,0.3), 0 0 120px rgba(88,60,220,0.15);
-      animation: logoReveal 1.2s ease-out forwards; margin-bottom: 12px; opacity: 0; transform: translateY(20px);
+      font-size: 72px; font-weight: 900; letter-spacing: 12px; color: #fff; text-transform: uppercase;
+      text-shadow: 0 0 20px rgba(88,60,220,0.5), 0 0 50px rgba(88,60,220,0.25), 0 0 100px rgba(88,60,220,0.1);
+      animation: logoReveal 1.2s ease-out forwards; margin-bottom: 10px; opacity: 0; transform: translateY(20px);
     }
-    @keyframes logoReveal { 0%{opacity:0;transform:translateY(20px);letter-spacing:30px;filter:blur(4px)} 100%{opacity:1;transform:translateY(0);letter-spacing:14px;filter:blur(0)} }
+    @keyframes logoReveal { 0%{opacity:0;transform:translateY(20px);letter-spacing:28px;filter:blur(4px)} 100%{opacity:1;transform:translateY(0);letter-spacing:12px;filter:blur(0)} }
     .kitten-loader-logo span {
       background: linear-gradient(135deg, #583cdc, #00b4ff);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
     .kitten-loader-subtitle {
-      font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.5); letter-spacing: 6px;
-      text-transform: uppercase; margin-bottom: 56px; animation: subtitleReveal 0.8s ease-out 0.4s forwards;
-      opacity: 0;
+      font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.45); letter-spacing: 5px;
+      text-transform: uppercase; margin-bottom: 48px; animation: subtitleReveal 0.8s ease-out 0.4s forwards; opacity: 0;
     }
-    @keyframes subtitleReveal { 0%{opacity:0;transform:translateY(10px)} 100%{opacity:0.8;transform:translateY(0)} }
-
+    @keyframes subtitleReveal { 0%{opacity:0;transform:translateY(10px)} 100%{opacity:0.7;transform:translateY(0)} }
     .progress-bar-area {
-      width: 320px; height: 1px; background: rgba(255,255,255,0.06);
-      position: relative; overflow: hidden;
+      width: 280px; height: 1px; background: rgba(255,255,255,0.05); position: relative; overflow: hidden;
     }
     .progress-bar-area::after {
       content: ''; position: absolute; top: 0; left: 0; height: 100%; width: 40%;
-      background: linear-gradient(90deg, #583cdc, #00b4ff, #583cdc);
-      background-size: 200% 100%;
-      animation: pBar 2.5s ease-in-out infinite, pBarShimmer 2s linear infinite;
-      box-shadow: 0 0 15px rgba(88,60,220,0.4);
+      background: linear-gradient(90deg, #583cdc, #00b4ff, #583cdc); background-size: 200% 100%;
+      animation: pBar 3s ease-in-out infinite, pBarShimmer 2s linear infinite;
+      box-shadow: 0 0 12px rgba(88,60,220,0.3);
     }
     @keyframes pBar { 0%{left:-40%} 50%{left:65%} 100%{left:-40%} }
     @keyframes pBarShimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
-
-    .kitten-loader-container .text {
-      margin-top: 24px; font-size: 12px; font-weight: 300;
-      color: rgba(255,255,255,0.35); letter-spacing: 3px;
+    .k4-build-indicator {
+      position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; gap: 12px; pointer-events: none;
     }
-
+    .k4-build-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.1);
+      transition: background 0.6s ease, box-shadow 0.6s ease;
+    }
+    .k4-build-dot.loaded {
+      background: rgba(88,60,220,0.6); box-shadow: 0 0 8px rgba(88,60,220,0.3);
+    }
+    .kitten-loader-container .text { margin-top: 20px; font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.3); letter-spacing: 3px; }
     #offline-text {
-      box-sizing: border-box; margin: 20px auto 0; padding: 8px 20px;
-      border: 1px solid rgba(255,255,255,0.08); border-radius: 4px;
-      font-size: 11px; font-weight: 300; letter-spacing: 2px;
-      color: rgba(255,255,255,0.3); background: transparent;
+      box-sizing: border-box; margin: 16px auto 0; padding: 6px 16px; border: 1px solid rgba(255,255,255,0.06); border-radius: 4px;
+      font-size: 10px; font-weight: 300; letter-spacing: 2px; color: rgba(255,255,255,0.25); background: transparent;
       transition: all 0.3s ease; cursor: pointer; display: inline-block;
     }
-    #offline-text:hover {
-      color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.04);
-      border-color: rgba(255,255,255,0.15);
-    }
-
+    #offline-text:hover { color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.12); }
     .kitten-loader-corner { position: absolute; z-index: 2; pointer-events: none; }
-    .kitten-loader-corner::before, .kitten-loader-corner::after { content: ''; position: absolute; background: rgba(255,255,255,0.08); }
+    .kitten-loader-corner::before, .kitten-loader-corner::after { content: ''; position: absolute; background: rgba(255,255,255,0.06); }
     .kitten-loader-corner.tl { top: 30px; left: 30px; }
     .kitten-loader-corner.tl::before { top: 0; left: 0; width: 40px; height: 1px; }
     .kitten-loader-corner.tl::after { top: 0; left: 0; width: 1px; height: 40px; }
@@ -102,53 +102,108 @@
     .kitten-loader-corner.br { bottom: 30px; right: 30px; }
     .kitten-loader-corner.br::before { bottom: 0; right: 0; width: 40px; height: 1px; }
     .kitten-loader-corner.br::after { bottom: 0; right: 0; width: 1px; height: 40px; }
-    </style><meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no"><meta name="apple-mobile-app-capable" content="yes"><meta name="full-screen" content="true"><meta name="screen-orientation" content="portrait"><meta name="x5-fullscreen" content="true"><meta name="360-fullscreen" content="true"><meta name="keywords" content="源码编辑器,Kitten源码编辑器,编程猫源码编辑器"><meta name="description" content="kitten源码编辑器，是编程猫公司开发的，适合中国儿童的图形化编程工具，简单易懂地创造属于你的游戏、故事、动画、应用程序..."><script>window.kitten_is_ide = true; // This has to happen before kitten.min.js is loaded</script><link rel="shortcut icon" href="./favicon_k4.png"><link href="./libs/perfect-scrollbar.min.css" rel="stylesheet"><link href="./kitten__a79a3015e6e4b2becc5f.css" rel="stylesheet"><link href="./design-system.css" rel="stylesheet"><link href="./svelte/app.svelte.css" rel="stylesheet"></head><body>
-<svg id="kitten_svg" width="0" height="0" style="display: block;"><defs></defs></svg><div id="root"></div><div id="kitten-loader-wrap"><div class="kitten-loader-background"></div><div class="kitten-loader-grid"></div><div class="kitten-loader-scanline"></div><div class="kitten-loader-glow"></div><div class="kitten-loader-corner tl"></div><div class="kitten-loader-corner tr"></div><div class="kitten-loader-corner bl"></div><div class="kitten-loader-corner br"></div><div class="kitten-loader-container"><div class="kitten-loader-logo">K4 <span>ULTRA</span></div><div class="kitten-loader-subtitle">System Initializing</div><div class="progress-bar-area"></div><div class="text" id="text"><div id="loading-text"></div><div id="offline-text" onclick="switch_mode()"></div></div></div></div><script>var text = document.getElementById('loading-text');
-    var offline_text = document.getElementById('offline-text');
-    var lang = navigator.language;
-    lang = lang.substr(0,2);
-      text.innerHTML = lang == "zh" ? "正在初始化 K4 ULTRA 系统..." : "Initializing K4 ULTRA system...";
-      offline_text.innerHTML = lang == "zh" ? "离线打开" : "Offline Open";
-      function switch_mode() {
-        window.use_offline_mode = true;
-        var text_dom = document.getElementById('text');
-        text.innerHTML = lang === 'zh' ? '正在进入“离线模式”...' : 'Opening in offline mode...';
-        text_dom.removeChild(offline_text);
-      }
-
-      // 动态加载点
-      (function(){
-        var dots = 0;
-        var baseText = text.innerHTML;
-        setInterval(function(){
-          dots = (dots + 1) % 4;
-          text.innerHTML = baseText + '<span style="color:#583cdc;">' + Array(dots + 1).join('.') + '</span>';
-        }, 500);
-      })();
-      </script>
-<script src="./libs/lottie_svg_cmao.min.js"></script>
-<script src="./runtime.baca20ff274133386a25.js"></script>
-<script src="./vendors.4570caaae74bd0240935.js"></script>
-<script src="./kitten.822d814413fb10654fde.js?v=14"></script>
-<script src="./extension-loader-v2.js?v=14"></script>
+</style>
+<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no">
+<meta name="apple-mobile-app-capable" content="yes"><meta name="full-screen" content="true">
+<meta name="screen-orientation" content="portrait"><meta name="x5-fullscreen" content="true"><meta name="360-fullscreen" content="true">
+<meta name="keywords" content="Kitten4,Blockly,scratch,graphical programming">
+<meta name="description" content="Kitten4 Ultra - a modern graphical programming editor">
+<script>window.kitten_is_ide = true;</script>
+<link rel="shortcut icon" href="./favicon_k4.png">
+<link href="./libs/perfect-scrollbar.min.css" rel="stylesheet">
+<link href="./kitten__a79a3015e6e4b2becc5f.css" rel="stylesheet">
+<link href="./design-system.css" rel="stylesheet">
+<link href="./svelte/app.svelte.css" rel="stylesheet">
+</head><body>
+<svg id="kitten_svg" width="0" height="0" style="display: block;"><defs></defs></svg>
+<div id="root"></div>
+<div id="kitten-loader-wrap">
+  <div class="kitten-loader-background"></div>
+  <div class="kitten-loader-grid"></div>
+  <div class="kitten-loader-scanline"></div>
+  <div class="kitten-loader-glow"></div>
+  <div class="kitten-loader-corner tl"></div>
+  <div class="kitten-loader-corner tr"></div>
+  <div class="kitten-loader-corner bl"></div>
+  <div class="kitten-loader-corner br"></div>
+  <div class="kitten-loader-container">
+    <div class="kitten-loader-logo">K4 <span>ULTRA</span></div>
+    <div class="kitten-loader-subtitle">System Initializing</div>
+    <div class="progress-bar-area"></div>
+    <div class="text" id="text"><div id="loading-text"></div><div id="offline-text" onclick="switch_mode()"></div></div>
+  </div>
+  <div class="k4-build-indicator" id="k4-build-dots">
+    <div class="k4-build-dot"></div><div class="k4-build-dot"></div><div class="k4-build-dot"></div>
+    <div class="k4-build-dot"></div><div class="k4-build-dot"></div>
+  </div>
+</div>
+<script>
+var text=document.getElementById('loading-text');
+var offline_text=document.getElementById('offline-text');
+var lang=navigator.language; lang=lang.substr(0,2);
+text.innerHTML=lang=="zh"?"正在初始化 K4 ULTRA 系统...":"Initializing K4 ULTRA system...";
+offline_text.innerHTML=lang=="zh"?"离线打开":"Offline Open";
+function switch_mode(){window.use_offline_mode=true;var d=document.getElementById('text');text.innerHTML=lang==='zh'?'正在进入"离线模式"...':'Opening in offline mode...';d.removeChild(offline_text);}
+(function(){var dots=0;var b=text.innerHTML;setInterval(function(){dots=(dots+1)%4;text.innerHTML=b+'<span style="color:#583cdc;">'+Array(dots+1).join('.')+'</span>'},500)})();
+window._k4BuildPhase=function(p){var dots=document.querySelectorAll('#k4-build-dots .k4-build-dot');for(var i=0;i<dots.length;i++){if(i<p)dots[i].classList.add('loaded')}};
+window._k4BuildPhase(0);
+</script>
+<script src="./libs/lottie_svg_cmao.min.js" onload="window._k4BuildPhase(1)"></script>
+<script src="./runtime.baca20ff274133386a25.js" onload="window._k4BuildPhase(2)"></script>
+<script src="./vendors.4570caaae74bd0240935.js" onload="window._k4BuildPhase(3)"></script>
+<script src="./kitten.822d814413fb10654fde.js?v=14" onload="window._k4BuildPhase(4)"></script>
+<script src="./extension-loader-v2.js?v=14" onload="window._k4BuildPhase(5)"></script>
 <script src="./extension-manager.js?v=14"></script>
 <script src="./settings-runtime.js?v=14"></script>
 <script>
-// K4 Ultra — inject custom appearance from k4-settings.json
-(function(){try{var fs=require('fs');var path=require('path');var base=path.join(__dirname,'..');var sp=path.join(base,'k4-settings.json');if(!fs.existsSync(sp))return;var c=JSON.parse(fs.readFileSync(sp,'utf8'));var a=c.appearance;if(!a)return;var css=':root{';if(a.primaryColor)css+='--k4-primary:'+a.primaryColor+';';if(a.secondaryColor)css+='--k4-secondary:'+a.secondaryColor+';';if(a.bgColor)css+='--k4-bg:'+a.bgColor+';';if(a.textColor)css+='--k4-text:'+a.textColor+';';if(a.glassMorphism){css+='--k4-glass-blur:'+(a.glassBlur||12)+'px;';css+='--k4-glass-opacity:'+(a.glassOpacity||15)+';'}css+='}';if(a.bgImage){css+='#kitten-loader-wrap::before{content:\"\";position:absolute;inset:0;z-index:-1;background:url(\"'+a.bgImage+'\") center/cover no-repeat;';if(a.glassMorphism)css+='filter:blur('+(a.glassBlur||12)+'px);opacity:0.3;';css+='}';}if(a.accentGlow&&a.primaryColor){css+='.kitten-loader-logo{text-shadow:0 0 20px '+a.primaryColor+'99,0 0 60px '+a.primaryColor+'4d,0 0 120px '+a.primaryColor+'26!important;}';}var s=document.createElement('style');s.id='k4-custom-appearance';s.textContent=css;document.head.appendChild(s);}catch(e){}})();
-
-// K4 Ultra: fallback hard timeout — hide loader if editor fails after 30s
-setTimeout(function() {
-  var loader = document.getElementById('kitten-loader-wrap');
-  if (loader && window.getComputedStyle(loader).visibility === 'visible') {
-    loader.style.visibility = 'hidden';
-    console.warn('[K4] Loader hidden by emergency fallback (30s timeout)');
-  }
-}, 30000);
+(function(){try{var fs=require('fs');var path=require('path');var base=path.join(__dirname,'..');var sp=path.join(base,'k4-settings.json');if(!fs.existsSync(sp))return;var c=JSON.parse(fs.readFileSync(sp,'utf8'));var a=c.appearance;if(!a)return;var loader=document.getElementById('kitten-loader-wrap');var bgHex=a.bgColor||'#050508';var r=parseInt(bgHex.substr(1,2),16);var g=parseInt(bgHex.substr(3,2),16);var b=parseInt(bgHex.substr(5,2),16);if(loader)loader.style.background='rgba('+r+','+g+','+b+',0.78)';var css=':root{';if(a.primaryColor)css+='--k4-primary:'+a.primaryColor+';';if(a.secondaryColor)css+='--k4-secondary:'+a.secondaryColor+';';if(a.bgColor)css+='--k4-bg:'+a.bgColor+';';if(a.textColor)css+='--k4-text:'+a.textColor+';';css+='}';if(a.bgImage){css+='#kitten-loader-wrap::before{content:"";position:absolute;inset:0;z-index:-1;background:url("'+a.bgImage+'") center/cover no-repeat;';if(a.glassMorphism)css+='filter:blur('+(a.glassBlur||12)+'px);opacity:0.3;';css+='}';}if(a.accentGlow&&a.primaryColor){css+='.kitten-loader-logo{text-shadow:0 0 20px '+a.primaryColor+'99,0 0 60px '+a.primaryColor+'4d,0 0 120px '+a.primaryColor+'26!important;}';css+='.progress-bar-area::after{background:linear-gradient(90deg,'+a.primaryColor+','+(a.secondaryColor||'#00b4ff')+','+a.primaryColor+')!important;box-shadow:0 0 12px '+a.primaryColor+'4d!important;}';css+='.kitten-loader-logo span{background:linear-gradient(135deg,'+a.primaryColor+','+(a.secondaryColor||'#00b4ff')+')!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important;}';css+='.k4-build-dot.loaded{background:'+a.primaryColor+'99!important;box-shadow:0 0 8px '+a.primaryColor+'4d!important;}';}var s=document.createElement('style');s.id='k4-custom-appearance';s.textContent=css;document.head.appendChild(s)}catch(e){}})();
+setTimeout(function(){var loader=document.getElementById('kitten-loader-wrap');if(loader&&window.getComputedStyle(loader).visibility==='visible'){loader.style.visibility='hidden';console.warn('[K4] Loader hidden by emergency fallback (30s timeout)')}},30000);
 </script>
-
-<!-- ⚡ 加载 Svelte UI Shell (FAB / 设置 / 调试面板等) -->
 <script src="./svelte/app.svelte.js"></script>
 
-</body>
-</html>
+<script>
+// Replace instant loader hide with frosted-glass dissolve animation
+(function(){
+  var loader = document.getElementById('kitten-loader-wrap');
+  if (!loader) return;
+  var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+      if (m.attributeName === 'style' || m.attributeName === 'visibility') {
+        var style = loader.style.visibility || window.getComputedStyle(loader).visibility;
+        if (style === 'hidden' && !loader.classList.contains('k4-loader-done')) {
+          // Intercept: replace instant hide with animated dissolve
+          loader.style.visibility = 'visible';
+          loader.classList.add('k4-loader-done');
+          // Actually remove from DOM after animation completes
+          setTimeout(function() {
+            loader.style.visibility = 'hidden';
+            loader.style.display = 'none';
+          }, 900);
+        }
+      }
+    });
+  });
+  observer.observe(loader, { attributes: true, attributeFilter: ['style', 'class'] });
+
+  // Also catch direct style.visibility assignments via CSSStyleDeclaration proxy
+  var origDescriptor = Object.getOwnPropertyDescriptor(CSSStyleDeclaration.prototype, 'visibility');
+  if (origDescriptor && origDescriptor.configurable) {
+    Object.defineProperty(loader.style, 'visibility', {
+      get: function() { return origDescriptor.get.call(loader.style); },
+      set: function(v) {
+        if (v === 'hidden' && !loader.classList.contains('k4-loader-done')) {
+          loader.classList.add('k4-loader-done');
+          setTimeout(function() {
+            origDescriptor.set.call(loader.style, 'hidden');
+            loader.style.display = 'none';
+          }, 900);
+          return;
+        }
+        origDescriptor.set.call(loader.style, v);
+      },
+      configurable: true
+    });
+  }
+})();
+</script>
+</body></html>
