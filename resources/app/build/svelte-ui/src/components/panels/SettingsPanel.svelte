@@ -166,6 +166,9 @@
   function saveSettings() {
     const payload = { general, appearance, editor, extensions, debug };
     writeJSON(SETTINGS_PATH, payload);
+
+    // Save old theme BEFORE updating loadingCfg
+    const oldTheme = loadingCfg.activeTheme;
     loadingCfg.activeTheme = general.theme;
     writeJSON(LOADING_CONFIG, loadingCfg);
 
@@ -182,14 +185,13 @@
     } catch (_) {}
 
     // If loading theme changed, offer reload
-    const oldTheme = loadingCfg.activeTheme;
     if (general.theme !== oldTheme) {
       uiStore.notify({ type: 'warning', message: t('general.reload_hint'), duration: 5000 });
       setTimeout(() => {
         if (confirm(t('general.reload_confirm') || 'Loading theme changed. Reload now?')) {
           location.reload();
         }
-      }, 300);
+      }, 400);
     } else {
       uiStore.notify({ type: 'success', message: t('settings.saved') });
     }
@@ -214,8 +216,9 @@
       <div class="k4-setting-row" style="margin-bottom:14px;">
         <label class="k4-setting-label">{t('appearance.preset')}</label>
         <select class="k4-select" style="min-width:160px;" bind:value={selectedPreset} onchange={(e) => {
-          const idx = PRESETS.findIndex(p => p.name === selectedPreset);
-          if (idx >= 0) applyPreset(PRESETS[idx]);
+          const val = (e.target as HTMLSelectElement).value;
+          const p = PRESETS.find(p => p.name === val);
+          if (p) applyPreset(p);
         }}>
           <option value="">{t('appearance.custom')}</option>
           {#each PRESETS as p}
