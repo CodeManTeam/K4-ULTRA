@@ -24,6 +24,11 @@
     editorReady = true;
   });
 
+  // Listen for open-settings from native header button
+  var _cleanupSettingsEvt = (window as any).__k4bus?.on?.('open-settings', function () {
+    appStore.setPage('settings');
+  });
+
   // ─── Draggable FAB state ──────────────────────────
   let fabEl: HTMLButtonElement;
   let fabX = $state(12);
